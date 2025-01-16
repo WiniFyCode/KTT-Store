@@ -1,0 +1,1 @@
+npm i express body-parser cors multer path express-handlebars dotenv mongoose nodemon bcryptjs jsonwebtoken mongodb 

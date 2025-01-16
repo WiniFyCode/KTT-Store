@@ -1,2 +1,1 @@
-# ktt-store
- 
+# KTT STORE
