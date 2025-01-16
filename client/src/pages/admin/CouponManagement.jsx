@@ -51,7 +51,7 @@ const CouponManagement = () => {
         try {
             setLoading(true);
             const response = await axios.get('/api/admins/coupons');
-            
+
             // Kiểm tra response format và lấy dữ liệu
             if (response.data && response.data.success) {
                 setCoupons(response.data.data || []);
@@ -122,7 +122,7 @@ const CouponManagement = () => {
         const now = new Date();
 
         // Lọc theo từ khóa tìm kiếm
-        let filteredCoupons = coupons.filter(coupon => 
+        let filteredCoupons = coupons.filter(coupon =>
             coupon.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
             coupon.description.toLowerCase().includes(searchTerm.toLowerCase())
         );
@@ -193,11 +193,10 @@ const CouponManagement = () => {
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage <= 1}
-                    className={`px-4 py-2 border rounded-lg ${
-                        isDarkMode
+                    className={`px-4 py-2 border rounded-lg ${isDarkMode
                             ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600'
                             : 'bg-white border-gray-300 hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400'
-                    }`}
+                        }`}
                 >
                     Trước
                 </button>
@@ -213,13 +212,12 @@ const CouponManagement = () => {
                             <button
                                 key={`page-${page}`}
                                 onClick={() => handlePageChange(page)}
-                                className={`px-4 py-2 border rounded-lg transition-colors ${
-                                    currentPage === page
+                                className={`px-4 py-2 border rounded-lg transition-colors ${currentPage === page
                                         ? 'bg-green-500 text-white border-green-500'
                                         : isDarkMode
                                             ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600'
                                             : 'bg-white hover:bg-gray-50 border-gray-300'
-                                }`}
+                                    }`}
                             >
                                 {page}
                             </button>
@@ -231,13 +229,12 @@ const CouponManagement = () => {
                                 <span className={`px-4 py-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>...</span>
                                 <button
                                     onClick={() => handlePageChange(page)}
-                                    className={`px-4 py-2 border rounded-lg transition-colors ${
-                                        currentPage === page
+                                    className={`px-4 py-2 border rounded-lg transition-colors ${currentPage === page
                                             ? 'bg-green-500 text-white border-green-500'
                                             : isDarkMode
                                                 ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600'
                                                 : 'bg-white hover:bg-gray-50 border-gray-300'
-                                    }`}
+                                        }`}
                                 >
                                     {page}
                                 </button>
@@ -250,11 +247,10 @@ const CouponManagement = () => {
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage >= totalPages}
-                    className={`px-4 py-2 border rounded-lg ${
-                        isDarkMode
+                    className={`px-4 py-2 border rounded-lg ${isDarkMode
                             ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600'
                             : 'bg-white border-gray-300 hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400'
-                    }`}
+                        }`}
                 >
                     Sau
                 </button>
@@ -327,26 +323,26 @@ const CouponManagement = () => {
                                     <input
                                         type="text"
                                         value={formData.code}
-                                        onChange={(e) => setFormData({...formData, code: e.target.value})}
+                                        onChange={(e) => setFormData({ ...formData, code: e.target.value })}
                                         className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 
-                                            ${isDarkMode 
-                                                ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                                            ${isDarkMode
+                                                ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
                                                 : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                                             }`}
                                         required
                                     />
                                 </div>
-                                
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                         Mô tả
                                     </label>
                                     <textarea
                                         value={formData.description}
-                                        onChange={(e) => setFormData({...formData, description: e.target.value})}
+                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                         className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 
-                                            ${isDarkMode 
-                                                ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                                            ${isDarkMode
+                                                ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
                                                 : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                                             }`}
                                         rows="3"
@@ -360,10 +356,10 @@ const CouponManagement = () => {
                                     </label>
                                     <select
                                         value={formData.discountType}
-                                        onChange={(e) => setFormData({...formData, discountType: e.target.value})}
+                                        onChange={(e) => setFormData({ ...formData, discountType: e.target.value })}
                                         className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 
-                                            ${isDarkMode 
-                                                ? 'bg-gray-700 border-gray-600 text-white' 
+                                            ${isDarkMode
+                                                ? 'bg-gray-700 border-gray-600 text-white'
                                                 : 'bg-white border-gray-300 text-gray-900'
                                             }`}
                                     >
@@ -379,10 +375,10 @@ const CouponManagement = () => {
                                     <input
                                         type="number"
                                         value={formData.discountValue}
-                                        onChange={(e) => setFormData({...formData, discountValue: Number(e.target.value)})}
+                                        onChange={(e) => setFormData({ ...formData, discountValue: Number(e.target.value) })}
                                         className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 
-                                            ${isDarkMode 
-                                                ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                                            ${isDarkMode
+                                                ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
                                                 : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                                             }`}
                                         required
@@ -397,10 +393,10 @@ const CouponManagement = () => {
                                         <input
                                             type="date"
                                             value={formData.startDate}
-                                            onChange={(e) => setFormData({...formData, startDate: e.target.value})}
+                                            onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
                                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 
-                                                ${isDarkMode 
-                                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                                                ${isDarkMode
+                                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
                                                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                                                 }`}
                                             required
@@ -413,10 +409,10 @@ const CouponManagement = () => {
                                         <input
                                             type="date"
                                             value={formData.endDate}
-                                            onChange={(e) => setFormData({...formData, endDate: e.target.value})}
+                                            onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
                                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 
-                                                ${isDarkMode 
-                                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                                                ${isDarkMode
+                                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
                                                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                                                 }`}
                                             required
@@ -432,10 +428,10 @@ const CouponManagement = () => {
                                         <input
                                             type="number"
                                             value={formData.usageLimit}
-                                            onChange={(e) => setFormData({...formData, usageLimit: Number(e.target.value)})}
+                                            onChange={(e) => setFormData({ ...formData, usageLimit: Number(e.target.value) })}
                                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 
-                                                ${isDarkMode 
-                                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                                                ${isDarkMode
+                                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
                                                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                                                 }`}
                                         />
@@ -447,10 +443,10 @@ const CouponManagement = () => {
                                         <input
                                             type="number"
                                             value={formData.totalUsageLimit}
-                                            onChange={(e) => setFormData({...formData, totalUsageLimit: Number(e.target.value)})}
+                                            onChange={(e) => setFormData({ ...formData, totalUsageLimit: Number(e.target.value) })}
                                             className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 
-                                                ${isDarkMode 
-                                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                                                ${isDarkMode
+                                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
                                                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                                                 }`}
                                         />
@@ -482,14 +478,14 @@ const CouponManagement = () => {
 
     const renderFilterControls = () => {
         const inputClassName = `w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 
-            ${isDarkMode 
-                ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+            ${isDarkMode
+                ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
                 : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
             }`;
 
         const selectClassName = `w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 
-            ${isDarkMode 
-                ? 'bg-gray-700 border-gray-600 text-white' 
+            ${isDarkMode
+                ? 'bg-gray-700 border-gray-600 text-white'
                 : 'bg-white border-gray-300 text-gray-900'
             }`;
 
@@ -621,7 +617,7 @@ const CouponManagement = () => {
                                 const isUsed = coupon.usageLimit === 0;
 
                                 return (
-                                    <tr key={coupon._id} 
+                                    <tr key={coupon._id}
                                         className={`hover:${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
@@ -634,8 +630,8 @@ const CouponManagement = () => {
                                             {coupon.discountType === 'percentage' ? '%' : 'Số tiền'}
                                         </td>
                                         <td className="px-6 py-4">
-                                            {coupon.discountType === 'percentage' 
-                                                ? `${coupon.discountValue}%` 
+                                            {coupon.discountType === 'percentage'
+                                                ? `${coupon.discountValue}%`
                                                 : `${coupon.discountValue.toLocaleString()} đ`
                                             }
                                         </td>
@@ -644,28 +640,28 @@ const CouponManagement = () => {
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
-                                                ${isUsed 
-                                                    ? 'bg-gray-100 text-gray-800' 
-                                                    : (isActive 
-                                                        ? 'bg-green-100 text-green-800' 
+                                                ${isUsed
+                                                    ? 'bg-gray-100 text-gray-800'
+                                                    : (isActive
+                                                        ? 'bg-green-100 text-green-800'
                                                         : 'bg-red-100 text-red-800')
                                                 }`}>
-                                                {isUsed 
-                                                    ? 'Đã sử dụng hết' 
-                                                    : (isActive 
-                                                        ? 'Còn hiệu lực' 
+                                                {isUsed
+                                                    ? 'Đã sử dụng hết'
+                                                    : (isActive
+                                                        ? 'Còn hiệu lực'
                                                         : 'Hết hạn')}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-center">
                                             <div className="flex justify-center space-x-2">
-                                                <button 
+                                                <button
                                                     onClick={() => handleEditClick(coupon)}
                                                     className={`p-2 rounded-full hover:${isDarkMode ? 'bg-gray-600' : 'bg-gray-100'}`}
                                                 >
                                                     <FiEdit2 className={`${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`} />
                                                 </button>
-                                                <button 
+                                                <button
                                                     onClick={() => handleDeleteCoupon(coupon._id)}
                                                     className={`p-2 rounded-full hover:${isDarkMode ? 'bg-gray-600' : 'bg-gray-100'}`}
                                                 >
@@ -686,12 +682,12 @@ const CouponManagement = () => {
     // ===== THỐNG KÊ MÃ GIẢM GIÁ =====
     const calculateCouponStats = () => {
         const now = new Date();
-        
+
         // Tính tổng lượt sử dụng
         const totalUsageLimit = coupons.reduce((sum, coupon) => sum + (coupon.usageLimit || 0), 0);
-        
+
         // Tìm mã giảm giá được sử dụng nhiều nhất
-        const mostUsedCoupon = coupons.reduce((max, coupon) => 
+        const mostUsedCoupon = coupons.reduce((max, coupon) =>
             (coupon.usageLimit > (max.usageLimit || 0)) ? coupon : max, {});
 
         return {
@@ -700,8 +696,8 @@ const CouponManagement = () => {
             expired: coupons.filter(coupon => new Date(coupon.endDate) < now).length,
             totalUsageLimit: totalUsageLimit,
             mostUsedCouponCode: mostUsedCoupon.code || 'Chưa có',
-            averageUsageLimit: totalUsageLimit > 0 
-                ? Math.round(totalUsageLimit / coupons.length) 
+            averageUsageLimit: totalUsageLimit > 0
+                ? Math.round(totalUsageLimit / coupons.length)
                 : 0
         };
     };
@@ -724,29 +720,29 @@ const CouponManagement = () => {
 
         return (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <StatCard 
-                    title="Tổng số mã" 
-                    value={stats.total} 
-                    icon={FiTag} 
-                    color="bg-blue-100 text-blue-600" 
+                <StatCard
+                    title="Tổng số mã"
+                    value={stats.total}
+                    icon={FiTag}
+                    color="bg-blue-100 text-blue-600"
                 />
-                <StatCard 
-                    title="Còn hiệu lực" 
-                    value={stats.active} 
-                    icon={FiCalendar} 
-                    color="bg-green-100 text-green-600" 
+                <StatCard
+                    title="Còn hiệu lực"
+                    value={stats.active}
+                    icon={FiCalendar}
+                    color="bg-green-100 text-green-600"
                 />
-                <StatCard 
-                    title="Hết hạn" 
-                    value={stats.expired} 
-                    icon={FiX} 
-                    color="bg-red-100 text-red-600" 
+                <StatCard
+                    title="Hết hạn"
+                    value={stats.expired}
+                    icon={FiX}
+                    color="bg-red-100 text-red-600"
                 />
-                <StatCard 
-                    title="Tổng lượt sử dụng" 
-                    value={stats.totalUsageLimit} 
-                    icon={FiDollarSign} 
-                    color="bg-purple-100 text-purple-600" 
+                <StatCard
+                    title="Tổng lượt sử dụng"
+                    value={stats.totalUsageLimit}
+                    icon={FiDollarSign}
+                    color="bg-purple-100 text-purple-600"
                 />
             </div>
         );
@@ -758,8 +754,8 @@ const CouponManagement = () => {
                 <h1 className="text-3xl font-bold mb-2">
                     Quản lý mã giảm giá
                 </h1>
-                <button 
-                    onClick={handleAddNew} 
+                <button
+                    onClick={handleAddNew}
                     className="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300"
                 >
                     <FiPlus className="mr-2" /> Thêm mã giảm giá

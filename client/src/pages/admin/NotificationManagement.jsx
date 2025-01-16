@@ -35,7 +35,7 @@ const NotificationManagement = () => {
         try {
             const response = await axios.get('/api/admins/notifications');
             const notifications = response.data;
-            
+
             setAllNotifications(notifications);
             calculateStats(notifications);
             filterNotifications(notifications);
@@ -71,7 +71,7 @@ const NotificationManagement = () => {
 
         // Lọc theo loại
         if (filters.type !== 'all') {
-            result = result.filter(notification => 
+            result = result.filter(notification =>
                 notification.type === filters.type
             );
         }
@@ -79,7 +79,7 @@ const NotificationManagement = () => {
         // Lọc theo từ khóa
         if (filters.searchTerm) {
             const searchLower = filters.searchTerm.toLowerCase();
-            result = result.filter(notification => 
+            result = result.filter(notification =>
                 notification.title.toLowerCase().includes(searchLower) ||
                 notification.message.toLowerCase().includes(searchLower)
             );
@@ -163,11 +163,10 @@ const NotificationManagement = () => {
                 <button
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage <= 1}
-                    className={`px-4 py-2 border rounded-lg ${
-                        isDarkMode
+                    className={`px-4 py-2 border rounded-lg ${isDarkMode
                             ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600'
                             : 'bg-white border-gray-300 hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400'
-                    }`}
+                        }`}
                 >
                     Trước
                 </button>
@@ -178,13 +177,12 @@ const NotificationManagement = () => {
                         <button
                             key={page}
                             onClick={() => setCurrentPage(page)}
-                            className={`px-4 py-2 border rounded-lg ${
-                                currentPage === page
+                            className={`px-4 py-2 border rounded-lg ${currentPage === page
                                     ? 'bg-green-500 text-white border-green-500'
                                     : isDarkMode
                                         ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600'
                                         : 'bg-white hover:bg-gray-50 border-gray-300'
-                            }`}
+                                }`}
                         >
                             {page}
                         </button>
@@ -194,11 +192,10 @@ const NotificationManagement = () => {
                 <button
                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                     disabled={currentPage >= totalPages}
-                    className={`px-4 py-2 border rounded-lg ${
-                        isDarkMode
+                    className={`px-4 py-2 border rounded-lg ${isDarkMode
                             ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600'
                             : 'bg-white border-gray-300 hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400'
-                    }`}
+                        }`}
                 >
                     Sau
                 </button>
@@ -211,9 +208,8 @@ const NotificationManagement = () => {
         return (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 {/* Thống kê thông báo hệ thống */}
-                <div className={`p-6 rounded-lg shadow-sm border ${
-                    isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-                }`}>
+                <div className={`p-6 rounded-lg shadow-sm border ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                    }`}>
                     <div className="flex items-center justify-between">
                         <div>
                             <p className="text-sm text-gray-500 mb-1">Thông báo hệ thống</p>
@@ -226,9 +222,8 @@ const NotificationManagement = () => {
                 </div>
 
                 {/* Thống kê thông báo đơn hàng */}
-                <div className={`p-6 rounded-lg shadow-sm border ${
-                    isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-                }`}>
+                <div className={`p-6 rounded-lg shadow-sm border ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                    }`}>
                     <div className="flex items-center justify-between">
                         <div>
                             <p className="text-sm text-gray-500 mb-1">Thông báo đơn hàng</p>
@@ -241,9 +236,8 @@ const NotificationManagement = () => {
                 </div>
 
                 {/* Thống kê thông báo khuyến mãi */}
-                <div className={`p-6 rounded-lg shadow-sm border ${
-                    isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-                }`}>
+                <div className={`p-6 rounded-lg shadow-sm border ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                    }`}>
                     <div className="flex items-center justify-between">
                         <div>
                             <p className="text-sm text-gray-500 mb-1">Thông báo khuyến mãi</p>
@@ -256,9 +250,8 @@ const NotificationManagement = () => {
                 </div>
 
                 {/* Thống kê thông báo khác */}
-                <div className={`p-6 rounded-lg shadow-sm border ${
-                    isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-                }`}>
+                <div className={`p-6 rounded-lg shadow-sm border ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+                    }`}>
                     <div className="flex items-center justify-between">
                         <div>
                             <p className="text-sm text-gray-500 mb-1">Thông báo khác</p>
@@ -279,43 +272,40 @@ const NotificationManagement = () => {
 
         return (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className={`w-full max-w-lg p-6 rounded-lg ${
-                    isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'
-                }`}>
+                <div className={`w-full max-w-lg p-6 rounded-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'
+                    }`}>
                     <h2 className="text-xl font-bold mb-4">
                         {selectedNotification._id ? 'Chỉnh sửa' : 'Thêm'} Thông báo
                     </h2>
 
                     <div className="mb-4">
                         <label className="block mb-2">Tiêu đề</label>
-                        <input 
+                        <input
                             type="text"
                             value={selectedNotification.title}
                             onChange={(e) => setSelectedNotification(prev => ({
-                                ...prev, 
+                                ...prev,
                                 title: e.target.value
                             }))}
-                            className={`w-full px-3 py-2 border rounded-lg ${
-                                isDarkMode 
-                                    ? 'bg-gray-700 border-gray-600 text-white' 
+                            className={`w-full px-3 py-2 border rounded-lg ${isDarkMode
+                                    ? 'bg-gray-700 border-gray-600 text-white'
                                     : 'bg-white border-gray-300'
-                            }`}
+                                }`}
                         />
                     </div>
 
                     <div className="mb-4">
                         <label className="block mb-2">Nội dung</label>
-                        <textarea 
+                        <textarea
                             value={selectedNotification.message}
                             onChange={(e) => setSelectedNotification(prev => ({
-                                ...prev, 
+                                ...prev,
                                 message: e.target.value
                             }))}
-                            className={`w-full px-3 py-2 border rounded-lg h-32 ${
-                                isDarkMode 
-                                    ? 'bg-gray-700 border-gray-600 text-white' 
+                            className={`w-full px-3 py-2 border rounded-lg h-32 ${isDarkMode
+                                    ? 'bg-gray-700 border-gray-600 text-white'
                                     : 'bg-white border-gray-300'
-                            }`}
+                                }`}
                         />
                     </div>
 
@@ -324,14 +314,13 @@ const NotificationManagement = () => {
                         <select
                             value={selectedNotification.type}
                             onChange={(e) => setSelectedNotification(prev => ({
-                                ...prev, 
+                                ...prev,
                                 type: e.target.value
                             }))}
-                            className={`w-full px-3 py-2 border rounded-lg ${
-                                isDarkMode 
-                                    ? 'bg-gray-700 border-gray-600 text-white' 
+                            className={`w-full px-3 py-2 border rounded-lg ${isDarkMode
+                                    ? 'bg-gray-700 border-gray-600 text-white'
                                     : 'bg-white border-gray-300'
-                            }`}
+                                }`}
                         >
                             <option value="order">Đơn hàng</option>
                             <option value="coupon">Khuyến mãi</option>
@@ -342,56 +331,52 @@ const NotificationManagement = () => {
 
                     <div className="mb-4">
                         <label className="block mb-2">Thời gian hiển thị</label>
-                        <input 
+                        <input
                             type="datetime-local"
                             value={selectedNotification.scheduledFor ? new Date(selectedNotification.scheduledFor).toISOString().slice(0, 16) : ''}
                             onChange={(e) => setSelectedNotification(prev => ({
-                                ...prev, 
+                                ...prev,
                                 scheduledFor: e.target.value
                             }))}
-                            className={`w-full px-3 py-2 border rounded-lg ${
-                                isDarkMode 
-                                    ? 'bg-gray-700 border-gray-600 text-white' 
+                            className={`w-full px-3 py-2 border rounded-lg ${isDarkMode
+                                    ? 'bg-gray-700 border-gray-600 text-white'
                                     : 'bg-white border-gray-300'
-                            }`}
+                                }`}
                         />
                     </div>
 
                     <div className="mb-4">
                         <label className="block mb-2">Thời gian hết hạn</label>
-                        <input 
+                        <input
                             type="datetime-local"
                             value={selectedNotification.expiresAt ? new Date(selectedNotification.expiresAt).toISOString().slice(0, 16) : ''}
                             onChange={(e) => setSelectedNotification(prev => ({
-                                ...prev, 
+                                ...prev,
                                 expiresAt: e.target.value
                             }))}
-                            className={`w-full px-3 py-2 border rounded-lg ${
-                                isDarkMode 
-                                    ? 'bg-gray-700 border-gray-600 text-white' 
+                            className={`w-full px-3 py-2 border rounded-lg ${isDarkMode
+                                    ? 'bg-gray-700 border-gray-600 text-white'
                                     : 'bg-white border-gray-300'
-                            }`}
+                                }`}
                         />
                     </div>
 
                     <div className="flex justify-end space-x-2">
-                        <button 
+                        <button
                             onClick={() => setIsModalOpen(false)}
-                            className={`px-4 py-2 rounded-lg ${
-                                isDarkMode 
-                                    ? 'bg-gray-600 text-white hover:bg-gray-700' 
+                            className={`px-4 py-2 rounded-lg ${isDarkMode
+                                    ? 'bg-gray-600 text-white hover:bg-gray-700'
                                     : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                            }`}
+                                }`}
                         >
                             Hủy
                         </button>
-                        <button 
+                        <button
                             onClick={handleSaveNotification}
-                            className={`px-4 py-2 rounded-lg ${
-                                isDarkMode 
-                                    ? 'bg-green-600 text-white hover:bg-green-700' 
+                            className={`px-4 py-2 rounded-lg ${isDarkMode
+                                    ? 'bg-green-600 text-white hover:bg-green-700'
                                     : 'bg-green-500 text-white hover:bg-green-600'
-                            }`}
+                                }`}
                         >
                             Lưu
                         </button>
@@ -418,11 +403,10 @@ const NotificationManagement = () => {
                 <h1 className="text-2xl font-bold">Quản lý thông báo</h1>
                 <button
                     onClick={handleAddNotification}
-                    className={`flex items-center justify-center px-4 py-2 rounded-lg transition-colors duration-300 ${
-                        isDarkMode
+                    className={`flex items-center justify-center px-4 py-2 rounded-lg transition-colors duration-300 ${isDarkMode
                             ? 'bg-green-600 text-white hover:bg-green-700'
                             : 'bg-green-500 text-white hover:bg-green-600'
-                    }`}
+                        }`}
                 >
                     <FiPlus className="mr-2" /> Thêm thông báo
                 </button>
@@ -434,33 +418,31 @@ const NotificationManagement = () => {
             {/* Bộ lọc */}
             <div className="flex space-x-4 mb-6">
                 <div className="flex-grow">
-                    <input 
+                    <input
                         type="text"
                         placeholder="Tìm kiếm thông báo..."
                         value={filters.searchTerm}
                         onChange={(e) => setFilters(prev => ({
-                            ...prev, 
+                            ...prev,
                             searchTerm: e.target.value
                         }))}
-                        className={`w-full px-3 py-2 border rounded-lg ${
-                            isDarkMode 
-                                ? 'bg-gray-700 border-gray-600 text-white' 
+                        className={`w-full px-3 py-2 border rounded-lg ${isDarkMode
+                                ? 'bg-gray-700 border-gray-600 text-white'
                                 : 'bg-white border-gray-300'
-                        }`}
+                            }`}
                     />
                 </div>
                 <div>
                     <select
                         value={filters.type}
                         onChange={(e) => setFilters(prev => ({
-                            ...prev, 
+                            ...prev,
                             type: e.target.value
                         }))}
-                        className={`w-full px-3 py-2 border rounded-lg ${
-                            isDarkMode 
-                                ? 'bg-gray-700 border-gray-600 text-white' 
+                        className={`w-full px-3 py-2 border rounded-lg ${isDarkMode
+                                ? 'bg-gray-700 border-gray-600 text-white'
                                 : 'bg-white border-gray-300'
-                        }`}
+                            }`}
                     >
                         <option value="all">Tất cả loại</option>
                         <option value="order">Đơn hàng</option>
@@ -472,15 +454,13 @@ const NotificationManagement = () => {
             </div>
 
             {/* Bảng thông báo */}
-            <div className={`overflow-x-auto rounded-lg shadow ${
-                isDarkMode ? 'bg-gray-800' : 'bg-white'
-            }`}>
+            <div className={`overflow-x-auto rounded-lg shadow ${isDarkMode ? 'bg-gray-800' : 'bg-white'
+                }`}>
                 <table className="w-full">
-                    <thead className={`border-b ${
-                        isDarkMode 
-                            ? 'bg-gray-700 border-gray-600' 
+                    <thead className={`border-b ${isDarkMode
+                            ? 'bg-gray-700 border-gray-600'
                             : 'bg-gray-100 border-gray-200'
-                    }`}>
+                        }`}>
                         <tr>
                             <th className="px-6 py-3 text-left">Tiêu đề</th>
                             <th className="px-6 py-3 text-left">Nội dung</th>
@@ -493,13 +473,12 @@ const NotificationManagement = () => {
                     </thead>
                     <tbody>
                         {currentNotifications.map(notification => (
-                            <tr 
-                                key={notification._id} 
-                                className={`border-b ${
-                                    isDarkMode 
-                                        ? 'border-gray-700 hover:bg-gray-700' 
+                            <tr
+                                key={notification._id}
+                                className={`border-b ${isDarkMode
+                                        ? 'border-gray-700 hover:bg-gray-700'
                                         : 'border-gray-200 hover:bg-gray-50'
-                                }`}
+                                    }`}
                             >
                                 <td className="px-6 py-6">
                                     <div className="flex items-center">
@@ -509,15 +488,14 @@ const NotificationManagement = () => {
                                 </td>
                                 <td className="px-6 py-6">{notification.message}</td>
                                 <td className="px-6 py-6">
-                                    <span className={`px-2 py-1 rounded-full text-xs ${
-                                        notification.type === 'order' ? 'bg-blue-100 text-blue-800' :
-                                        notification.type === 'coupon' ? 'bg-green-100 text-green-800' :
-                                        notification.type === 'system' ? 'bg-yellow-100 text-yellow-800' :
-                                        'bg-gray-100 text-gray-800'
-                                    }`}>
+                                    <span className={`px-2 py-1 rounded-full text-xs ${notification.type === 'order' ? 'bg-blue-100 text-blue-800' :
+                                            notification.type === 'coupon' ? 'bg-green-100 text-green-800' :
+                                                notification.type === 'system' ? 'bg-yellow-100 text-yellow-800' :
+                                                    'bg-gray-100 text-gray-800'
+                                        }`}>
                                         {notification.type === 'order' ? 'Đơn hàng' :
-                                         notification.type === 'coupon' ? 'Khuyến mãi' :
-                                         notification.type === 'system' ? 'Hệ thống' : 'Khác'}
+                                            notification.type === 'coupon' ? 'Khuyến mãi' :
+                                                notification.type === 'system' ? 'Hệ thống' : 'Khác'}
                                     </span>
                                 </td>
                                 <td className="px-6 py-6">
@@ -531,26 +509,24 @@ const NotificationManagement = () => {
                                 </td>
                                 <td className="px-6 py-6">
                                     <div className="flex space-x-2">
-                                        <button 
+                                        <button
                                             onClick={() => {
                                                 setSelectedNotification(notification);
                                                 setIsModalOpen(true);
                                             }}
-                                            className={`p-2 rounded-lg ${
-                                                isDarkMode 
-                                                    ? 'text-blue-400 hover:bg-blue-900' 
+                                            className={`p-2 rounded-lg ${isDarkMode
+                                                    ? 'text-blue-400 hover:bg-blue-900'
                                                     : 'text-blue-600 hover:bg-blue-100'
-                                            }`}
+                                                }`}
                                         >
                                             <FiEdit2 />
                                         </button>
-                                        <button 
+                                        <button
                                             onClick={() => handleDeleteNotification(notification._id)}
-                                            className={`p-2 rounded-lg ${
-                                                isDarkMode 
-                                                    ? 'text-red-400 hover:bg-red-900' 
+                                            className={`p-2 rounded-lg ${isDarkMode
+                                                    ? 'text-red-400 hover:bg-red-900'
                                                     : 'text-red-600 hover:bg-red-100'
-                                            }`}
+                                                }`}
                                         >
                                             <FiTrash2 />
                                         </button>

@@ -80,7 +80,7 @@ const Register = () => {
   // Hàm xử lý khi người dùng nhập liệu
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     // Cập nhật giá trị form
     setFormData(prev => ({
       ...prev,
@@ -96,7 +96,7 @@ const Register = () => {
 
     // Nếu đang nhập mật khẩu, kiểm tra lại trường xác nhận mật khẩu
     if (name === 'password') {
-      const confirmError = formData.confirmPassword ? 
+      const confirmError = formData.confirmPassword ?
         (value === formData.confirmPassword ? '' : 'Mật khẩu không khớp') : '';
       setErrors(prev => ({
         ...prev,
@@ -190,7 +190,7 @@ const Register = () => {
               {error}
             </motion.div>
           )}
-          
+
           {/* Input tên người dùng */}
           <div>
             <label htmlFor="username" className="block text-base font-medium text-gray-700">
@@ -202,9 +202,8 @@ const Register = () => {
                 name="username"
                 type="text"
                 required
-                className={`appearance-none block w-full px-3 py-2 border ${
-                  errors.username ? 'border-red-300' : 'border-gray-300'
-                } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base`}
+                className={`appearance-none block w-full px-3 py-2 border ${errors.username ? 'border-red-300' : 'border-gray-300'
+                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base`}
                 placeholder="Nhập tên người dùng"
                 value={formData.username}
                 onChange={handleChange}
@@ -226,9 +225,8 @@ const Register = () => {
                 name="email"
                 type="email"
                 required
-                className={`appearance-none block w-full px-3 py-2 border ${
-                  errors.email ? 'border-red-300' : 'border-gray-300'
-                } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base`}
+                className={`appearance-none block w-full px-3 py-2 border ${errors.email ? 'border-red-300' : 'border-gray-300'
+                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base`}
                 placeholder="admin@example.com"
                 value={formData.email}
                 onChange={handleChange}
@@ -250,9 +248,8 @@ const Register = () => {
                 name="phone"
                 type="tel"
                 required
-                className={`appearance-none block w-full px-3 py-2 border ${
-                  errors.phone ? 'border-red-300' : 'border-gray-300'
-                } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base`}
+                className={`appearance-none block w-full px-3 py-2 border ${errors.phone ? 'border-red-300' : 'border-gray-300'
+                  } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base`}
                 placeholder="0123456789"
                 value={formData.phone}
                 onChange={handleChange}
@@ -274,9 +271,8 @@ const Register = () => {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 required
-                className={`appearance-none block w-full pr-10 px-3 py-2 border ${
-                  errors.password ? 'border-red-300' : 'border-gray-300'
-                } rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base`}
+                className={`appearance-none block w-full pr-10 px-3 py-2 border ${errors.password ? 'border-red-300' : 'border-gray-300'
+                  } rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base`}
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
@@ -316,9 +312,8 @@ const Register = () => {
                 name="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 required
-                className={`appearance-none block w-full pr-10 px-3 py-2 border ${
-                  errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
-                } rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base`}
+                className={`appearance-none block w-full pr-10 px-3 py-2 border ${errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
+                  } rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base`}
                 placeholder="••••••••"
                 value={formData.confirmPassword}
                 onChange={handleChange}
@@ -352,9 +347,8 @@ const Register = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white ${
-                loading ? 'bg-indigo-400' : 'bg-indigo-600 hover:bg-indigo-700'
-              } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200`}
+              className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white ${loading ? 'bg-indigo-400' : 'bg-indigo-600 hover:bg-indigo-700'
+                } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200`}
             >
               {loading ? (
                 <>

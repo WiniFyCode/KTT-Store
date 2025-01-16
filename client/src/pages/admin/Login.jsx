@@ -36,7 +36,7 @@ const Login = () => {
       setError('');
 
       try {
-         const response = await axios.post('http://localhost:5000/api/admins/login', formData);
+         const response = await axios.post('http://localhost:5000/api/auth/admin/login', formData);
          // Lưu token vào localStorage
          localStorage.setItem('adminToken', response.data.token);
          if (formData.rememberMe) {

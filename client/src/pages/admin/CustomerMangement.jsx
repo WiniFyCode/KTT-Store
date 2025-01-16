@@ -15,7 +15,7 @@ const Customers = () => {
     const [allCustomers, setAllCustomers] = useState([]); // Lưu toàn bộ danh sách khách hàng
     const [filteredCustomers, setFilteredCustomers] = useState([]); // Lưu danh sách khách hàng sau khi lọc
     const [loading, setLoading] = useState(true); // Trạng thái đang tải dữ liệu
-    
+
     // ===== STATE CHO TÌM KIẾM VÀ LỌC =====
     const [searchTerm, setSearchTerm] = useState(''); // Từ khóa tìm kiếm
     const [filters, setFilters] = useState({
@@ -98,7 +98,7 @@ const Customers = () => {
         // Xử lý tìm kiếm
         if (searchTerm) {
             const searchLower = searchTerm.toLowerCase();
-            result = result.filter(customer => 
+            result = result.filter(customer =>
                 // Tìm trong tên, email hoặc số điện thoại
                 customer.fullname?.toLowerCase().includes(searchLower) ||
                 customer.email?.toLowerCase().includes(searchLower) ||
@@ -115,7 +115,7 @@ const Customers = () => {
 
         // Lọc theo giới tính
         if (filters.gender) {
-            result = result.filter(customer => 
+            result = result.filter(customer =>
                 customer.sex === filters.gender
             );
         }
@@ -137,7 +137,7 @@ const Customers = () => {
         // Cập nhật state với kết quả đã lọc
         setFilteredCustomers(result);
         setTotalPages(calculateTotalPages());
-        
+
         // Nếu trang hiện tại lớn hơn tổng số trang, reset về trang 1
         if (currentPage > calculateTotalPages()) {
             setCurrentPage(1);
@@ -157,7 +157,7 @@ const Customers = () => {
         try {
             // Gọi API để thay đổi trạng thái
             await axios.patch(`/api/admins/customers/${id}/toggle-status`);
-            
+
             // Cập nhật state local
             // Cập nhật lại danh sách local
             // Tìm và update trạng thái của khách hàng có ID tương ứng
@@ -171,7 +171,7 @@ const Customers = () => {
                 }
             });
             setAllCustomers(updatedCustomers);
-            
+
             // Hiển thị thông báo thành công
             toast.success(`${currentStatus ? 'Kích hoạt' : 'Vô hiệu hóa'} tài khoản thành công`);
         } catch (error) {
@@ -187,11 +187,11 @@ const Customers = () => {
             try {
                 // Gọi API để xóa
                 await axios.delete(`/api/admins/customers/${id}`);
-                
+
                 // Cập nhật state local bằng cách lọc bỏ khách hàng đã xóa
                 const updatedCustomers = allCustomers.filter(customer => customer._id !== id);
                 setAllCustomers(updatedCustomers);
-                
+
                 // Hiển thị thông báo thành công
                 toast.success('Xóa khách hàng thành công');
             } catch (error) {
@@ -213,7 +213,7 @@ const Customers = () => {
         try {
             // Gọi API để cập nhật
             const response = await axios.put(`/api/admins/customers/update/${editingCustomer._id}`, editingCustomer);
-            
+
             if (response.status === 200) {
                 // Cập nhật lại danh sách local
                 const updatedCustomers = allCustomers.map(customer => {
@@ -226,11 +226,11 @@ const Customers = () => {
                     }
                 });
                 setAllCustomers(updatedCustomers);
-                
+
                 // Đóng modal và reset state
                 setIsModalOpen(false);
                 setEditingCustomer(null);
-                
+
                 // Hiển thị thông báo thành công
                 toast.success('Cập nhật thông tin thành công!');
             }
@@ -276,10 +276,9 @@ const Customers = () => {
                                 <input
                                     type="text"
                                     value={editingCustomer?.fullname || ''}
-                                    onChange={(e) => setEditingCustomer({...editingCustomer, fullname: e.target.value})}
-                                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
-                                        isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-300'
-                                    }`}
+                                    onChange={(e) => setEditingCustomer({ ...editingCustomer, fullname: e.target.value })}
+                                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-300'
+                                        }`}
                                     required
                                 />
                             </div>
@@ -290,10 +289,9 @@ const Customers = () => {
                                 <input
                                     type="email"
                                     value={editingCustomer?.email || ''}
-                                    onChange={(e) => setEditingCustomer({...editingCustomer, email: e.target.value})}
-                                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
-                                        isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-300'
-                                    }`}
+                                    onChange={(e) => setEditingCustomer({ ...editingCustomer, email: e.target.value })}
+                                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-300'
+                                        }`}
                                     required
                                 />
                             </div>
@@ -304,10 +302,9 @@ const Customers = () => {
                                 <input
                                     type="tel"
                                     value={editingCustomer?.phone || ''}
-                                    onChange={(e) => setEditingCustomer({...editingCustomer, phone: e.target.value})}
-                                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
-                                        isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-300'
-                                    }`}
+                                    onChange={(e) => setEditingCustomer({ ...editingCustomer, phone: e.target.value })}
+                                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-300'
+                                        }`}
                                     required
                                 />
                             </div>
@@ -317,10 +314,9 @@ const Customers = () => {
                                 </label>
                                 <select
                                     value={editingCustomer?.sex || ''}
-                                    onChange={(e) => setEditingCustomer({...editingCustomer, sex: e.target.value})}
-                                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
-                                        isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-300'
-                                    }`}
+                                    onChange={(e) => setEditingCustomer({ ...editingCustomer, sex: e.target.value })}
+                                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-300'
+                                        }`}
                                     required
                                 >
                                     <option value="">Chọn giới tính</option>
@@ -339,11 +335,10 @@ const Customers = () => {
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(false)}
-                                className={`mt-3 w-full inline-flex justify-center rounded-md border shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm ${
-                                    isDarkMode 
-                                        ? 'bg-gray-700 text-gray-200 hover:bg-gray-600 border-gray-600' 
+                                className={`mt-3 w-full inline-flex justify-center rounded-md border shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm ${isDarkMode
+                                        ? 'bg-gray-700 text-gray-200 hover:bg-gray-600 border-gray-600'
                                         : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'
-                                }`}
+                                    }`}
                             >
                                 Hủy
                             </button>
@@ -414,9 +409,8 @@ const Customers = () => {
                                     <input
                                         type="text"
                                         placeholder="Tìm kiếm theo tên, email hoặc số điện thoại..."
-                                        className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
-                                            isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200 placeholder-gray-400' : 'bg-white border-gray-200'
-                                        }`}
+                                        className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200 placeholder-gray-400' : 'bg-white border-gray-200'
+                                            }`}
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                     />
@@ -426,9 +420,8 @@ const Customers = () => {
 
                             {/* Lọc theo trạng thái */}
                             <select
-                                className={`min-w-[210px] border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all hover:bg-opacity-90 cursor-pointer ${
-                                    isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-200'
-                                }`}
+                                className={`min-w-[210px] border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all hover:bg-opacity-90 cursor-pointer ${isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-200'
+                                    }`}
                                 value={filters.status}
                                 onChange={(e) => handleFilterChange('status', e.target.value)}
                             >
@@ -439,9 +432,8 @@ const Customers = () => {
 
                             {/* Lọc theo giới tính */}
                             <select
-                                className={`min-w-[160px] border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all hover:bg-opacity-90 cursor-pointer ${
-                                    isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-200'
-                                }`}
+                                className={`min-w-[160px] border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all hover:bg-opacity-90 cursor-pointer ${isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-200'
+                                    }`}
                                 value={filters.gender}
                                 onChange={(e) => handleFilterChange('gender', e.target.value)}
                             >
@@ -452,9 +444,8 @@ const Customers = () => {
 
                             {/* Sắp xếp */}
                             <select
-                                className={`min-w-[120px] border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all hover:bg-opacity-90 cursor-pointer ${
-                                    isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-200'
-                                }`}
+                                className={`min-w-[120px] border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all hover:bg-opacity-90 cursor-pointer ${isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-200'
+                                    }`}
                                 value={filters.sort}
                                 onChange={(e) => handleFilterChange('sort', e.target.value)}
                             >
@@ -464,9 +455,8 @@ const Customers = () => {
                             </select>
 
                             <select
-                                className={`min-w-[120px] border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all hover:bg-opacity-90 cursor-pointer ${
-                                    isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-200'
-                                }`}
+                                className={`min-w-[120px] border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all hover:bg-opacity-90 cursor-pointer ${isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-200' : 'bg-white border-gray-200'
+                                    }`}
                                 value={filters.order}
                                 onChange={(e) => handleFilterChange('order', e.target.value)}
                             >
@@ -522,7 +512,7 @@ const Customers = () => {
                                     </tr>
                                 ) : (
                                     getCurrentCustomers().map((customer, index) => (
-                                        <tr 
+                                        <tr
                                             key={customer._id}
                                             className={`${isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'} transition-colors`}
                                         >
@@ -546,11 +536,10 @@ const Customers = () => {
                                                 {customer.phone}
                                             </td>
                                             <td className="px-6 py-4">
-                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                                    customer.isDisable
+                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${customer.isDisable
                                                         ? 'bg-red-100 text-red-800'
                                                         : 'bg-green-100 text-green-800'
-                                                }`}>
+                                                    }`}>
                                                     {customer.isDisable ? 'Đã vô hiệu hóa' : 'Đang hoạt động'}
                                                 </span>
                                             </td>
@@ -558,22 +547,20 @@ const Customers = () => {
                                                 <div className="flex space-x-3">
                                                     <button
                                                         onClick={() => handleEdit(customer)}
-                                                        className={`transition-colors ${
-                                                            isDarkMode 
-                                                                ? 'bg-gray-700 text-gray-200 hover:bg-gray-600 border-gray-600' 
+                                                        className={`transition-colors ${isDarkMode
+                                                                ? 'bg-gray-700 text-gray-200 hover:bg-gray-600 border-gray-600'
                                                                 : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'
-                                                        }`}
+                                                            }`}
                                                         title="Chỉnh sửa"
                                                     >
                                                         <FiEdit2 className="w-5 h-5" />
                                                     </button>
                                                     <button
                                                         onClick={() => handleToggleStatus(customer._id, customer.isDisable)}
-                                                        className={`${
-                                                            customer.isDisable
+                                                        className={`${customer.isDisable
                                                                 ? 'text-green-600 hover:text-green-900'
                                                                 : 'text-red-600 hover:text-red-900'
-                                                        }`}
+                                                            }`}
                                                         title={customer.isDisable ? 'Kích hoạt' : 'Vô hiệu hóa'}
                                                     >
                                                         {customer.isDisable ? (
@@ -604,11 +591,10 @@ const Customers = () => {
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage <= 1}
-                        className={`px-4 py-2 border rounded-lg ${
-                            isDarkMode
+                        className={`px-4 py-2 border rounded-lg ${isDarkMode
                                 ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600'
                                 : 'bg-white border-gray-300 hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400'
-                        }`}
+                            }`}
                     >
                         Trước
                     </button>
@@ -624,13 +610,12 @@ const Customers = () => {
                                 <button
                                     key={`page-${page}`}
                                     onClick={() => handlePageChange(page)}
-                                    className={`px-4 py-2 border rounded-lg transition-colors ${
-                                        currentPage === page
+                                    className={`px-4 py-2 border rounded-lg transition-colors ${currentPage === page
                                             ? 'bg-green-500 text-white border-green-500'
                                             : isDarkMode
                                                 ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600'
                                                 : 'bg-white hover:bg-gray-50 border-gray-300'
-                                    }`}
+                                        }`}
                                 >
                                     {page}
                                 </button>
@@ -642,13 +627,12 @@ const Customers = () => {
                                     <span className={`px-4 py-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>...</span>
                                     <button
                                         onClick={() => handlePageChange(page)}
-                                        className={`px-4 py-2 border rounded-lg transition-colors ${
-                                            currentPage === page
+                                        className={`px-4 py-2 border rounded-lg transition-colors ${currentPage === page
                                                 ? 'bg-green-500 text-white border-green-500'
                                                 : isDarkMode
                                                     ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600'
                                                     : 'bg-white hover:bg-gray-50 border-gray-300'
-                                        }`}
+                                            }`}
                                     >
                                         {page}
                                     </button>
@@ -661,11 +645,10 @@ const Customers = () => {
                     <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage >= totalPages}
-                        className={`px-4 py-2 border rounded-lg ${
-                            isDarkMode
+                        className={`px-4 py-2 border rounded-lg ${isDarkMode
                                 ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600'
                                 : 'bg-white border-gray-300 hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400'
-                        }`}
+                            }`}
                     >
                         Sau
                     </button>

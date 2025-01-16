@@ -119,11 +119,10 @@ const OrderManagement = () => {
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage <= 1}
-                    className={`px-4 py-2 border rounded-lg ${
-                        isDarkMode
+                    className={`px-4 py-2 border rounded-lg ${isDarkMode
                             ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600'
                             : 'bg-white border-gray-300 hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400'
-                    }`}
+                        }`}
                 >
                     Trước
                 </button>
@@ -139,13 +138,12 @@ const OrderManagement = () => {
                             <button
                                 key={`page-${page}`}
                                 onClick={() => handlePageChange(page)}
-                                className={`px-4 py-2 border rounded-lg transition-colors ${
-                                    currentPage === page
+                                className={`px-4 py-2 border rounded-lg transition-colors ${currentPage === page
                                         ? 'bg-green-500 text-white border-green-500'
                                         : isDarkMode
                                             ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600'
                                             : 'bg-white hover:bg-gray-50 border-gray-300'
-                                }`}
+                                    }`}
                             >
                                 {page}
                             </button>
@@ -157,13 +155,12 @@ const OrderManagement = () => {
                                 <span className={`px-4 py-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>...</span>
                                 <button
                                     onClick={() => handlePageChange(page)}
-                                    className={`px-4 py-2 border rounded-lg transition-colors ${
-                                        currentPage === page
+                                    className={`px-4 py-2 border rounded-lg transition-colors ${currentPage === page
                                             ? 'bg-green-500 text-white border-green-500'
                                             : isDarkMode
                                                 ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600'
                                                 : 'bg-white hover:bg-gray-50 border-gray-300'
-                                    }`}
+                                        }`}
                                 >
                                     {page}
                                 </button>
@@ -176,11 +173,10 @@ const OrderManagement = () => {
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage >= totalPages}
-                    className={`px-4 py-2 border rounded-lg ${
-                        isDarkMode
+                    className={`px-4 py-2 border rounded-lg ${isDarkMode
                             ? 'bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600'
                             : 'bg-white border-gray-300 hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400'
-                    }`}
+                        }`}
                 >
                     Sau
                 </button>
@@ -282,7 +278,7 @@ const OrderManagement = () => {
         try {
             const response = await axiosInstance.put(`/api/admins/orders/update/${selectedOrder._id}`, editForm);
             if (response.status === 200) {
-                const updatedOrders = orders.map(order => 
+                const updatedOrders = orders.map(order =>
                     order._id === selectedOrder._id ? { ...order, ...editForm } : order
                 );
                 setOrders(updatedOrders);
@@ -544,22 +540,20 @@ const OrderManagement = () => {
                                 placeholder="Tìm kiếm theo mã đơn hàng hoặc tên khách hàng..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className={`w-full pl-10 pr-4 py-3 rounded-xl border ${
-                                    isDarkMode 
-                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-green-500' 
-                                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-500'
-                                } focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all duration-200`}
+                                className={`w-full pl-10 pr-4 py-3 rounded-xl border ${isDarkMode
+                                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-green-500'
+                                        : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-500'
+                                    } focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all duration-200`}
                             />
                             <FiSearch className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} w-5 h-5`} />
                         </div>
                     </div>
                     <div className="flex gap-4">
-                        <select 
-                            className={`px-4 py-3 rounded-xl border ${
-                                isDarkMode 
-                                ? 'bg-gray-700 border-gray-600 text-white' 
-                                : 'bg-white border-gray-300 text-gray-900'
-                            } focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/50`}
+                        <select
+                            className={`px-4 py-3 rounded-xl border ${isDarkMode
+                                    ? 'bg-gray-700 border-gray-600 text-white'
+                                    : 'bg-white border-gray-300 text-gray-900'
+                                } focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/50`}
                             onChange={(e) => setStatusFilter(e.target.value)}
                             value={statusFilter}
                         >
@@ -570,12 +564,11 @@ const OrderManagement = () => {
                             <option value="completed">Đã hoàn thành</option>
                             <option value="canceled">Đã hủy</option>
                         </select>
-                        <select 
-                            className={`px-4 py-3 rounded-xl border ${
-                                isDarkMode 
-                                ? 'bg-gray-700 border-gray-600 text-white' 
-                                : 'bg-white border-gray-300 text-gray-900'
-                            } focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/50`}
+                        <select
+                            className={`px-4 py-3 rounded-xl border ${isDarkMode
+                                    ? 'bg-gray-700 border-gray-600 text-white'
+                                    : 'bg-white border-gray-300 text-gray-900'
+                                } focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/50`}
                             onChange={(e) => setSortBy(e.target.value)}
                             value={sortBy}
                         >
@@ -668,17 +661,16 @@ const OrderManagement = () => {
                             <FiAlertCircle className="mx-auto text-red-500 w-14 h-14 mb-4" />
                             <h3 className="text-lg font-semibold mb-2">Xác nhận xóa đơn hàng</h3>
                             <p className={`mb-6 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                                Bạn có chắc chắn muốn xóa đơn hàng #{orderToDelete._id} không? 
+                                Bạn có chắc chắn muốn xóa đơn hàng #{orderToDelete._id} không?
                                 Hành động này không thể hoàn tác.
                             </p>
                             <div className="flex justify-center space-x-4">
                                 <button
                                     onClick={() => setShowDeleteConfirm(false)}
-                                    className={`px-4 py-2 rounded-lg ${
-                                        isDarkMode 
-                                        ? 'bg-gray-700 hover:bg-gray-600' 
-                                        : 'bg-gray-200 hover:bg-gray-300'
-                                    } transition-colors duration-200`}
+                                    className={`px-4 py-2 rounded-lg ${isDarkMode
+                                            ? 'bg-gray-700 hover:bg-gray-600'
+                                            : 'bg-gray-200 hover:bg-gray-300'
+                                        } transition-colors duration-200`}
                                 >
                                     Hủy bỏ
                                 </button>
@@ -764,11 +756,10 @@ const OrderManagement = () => {
                                         <div className="space-y-3">
                                             <div>
                                                 <p className="text-sm text-gray-500 dark:text-gray-400">Trạng thái thanh toán</p>
-                                                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                                                    selectedOrder.isPayed 
-                                                    ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' 
-                                                    : 'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100'
-                                                }`}>
+                                                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${selectedOrder.isPayed
+                                                        ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
+                                                        : 'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100'
+                                                    }`}>
                                                     <FiDollarSign className="mr-1" />
                                                     {selectedOrder.isPayed ? 'Đã thanh toán' : 'Chưa thanh toán'}
                                                 </span>

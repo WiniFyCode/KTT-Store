@@ -11,7 +11,8 @@ import AdminRegister from "./pages/admin/Register";
 import AdminForgotPassword from "./pages/admin/ForgotPassword";
 import Dashboard from './pages/admin/Dashboard';
 import Customers from './pages/admin/CustomerMangement';
-import Products from "./pages/admin/ProductManagement";
+// import Products from "./pages/admin/ProductManagement";
+import ProductBackup from "./pages/admin/ProductManagement.backup";
 import Orders from "./pages/admin/OrderManagement";
 import Coupons from "./pages/admin/CouponManagement";
 import Notifications from './pages/admin/NotificationManagement';
@@ -131,7 +132,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="customers" element={<Customers />} />
               <Route path="orders" element={<Orders />} />
-              <Route path="products" element={<Products />} />
+              <Route path="products" element={<ProductBackup />} />
               <Route path="coupons" element={<Coupons />} />
               <Route path="settings" element={<div>Settings</div>} />
               <Route path="notifications" element={<Notifications />} />
@@ -141,7 +142,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
-        <ToastContainer position="top-right" autoClose={3000} />
+        <ToastContainer position="top-right" autoClose={1500} />
       </CustomerThemeProvider>
     </AdminThemeProvider>
   );
