@@ -1,0 +1,129 @@
+
+1. Phân tích cấu trúc:
+Controllers cho Admin sẽ bao gồm:
+
+Quản lý sản phẩm (Product, ProductColor, ProductSizeStock)
+Quản lý danh mục (Category)
+Quản lý đơn hàng (Order, OrderDetail)
+Quản lý người dùng (User)
+Quản lý mã giảm giá (Coupon)
+Controllers cho Customer sẽ bao gồm:
+
+Sản phẩm (Product, Review)
+Giỏ hàng (Cart)
+Đơn hàng (Order)
+Địa chỉ (Address)
+Yêu thích (Favorite)
+Thông báo (Notification)
+Mã giảm giá (UserCoupon)
+
+
+Controllers cho Admin:
+category.controller.js: Quản lý danh mục sản phẩm
+order.controller.js: Quản lý đơn hàng và thống kê
+user.controller.js: Quản lý người dùng
+coupon.controller.js: Quản lý mã giảm giá
+product.controller.js (đã có sẵn)
+Controllers cho Customer:
+product.controller.js: Xem và tìm kiếm sản phẩm
+cart.controller.js: Quản lý giỏ hàng
+order.controller.js: Đặt hàng và theo dõi đơn hàng
+address.controller.js: Quản lý địa chỉ giao hàng
+favorite.controller.js: Quản lý danh sách yêu thích
+notification.controller.js: Quản lý thông báo
+coupon.controller.js: Sử dụng mã giảm giá
+
+=========================================================
+API Endpoints cho Admin:
+Quản lý sản phẩm cơ bản:
+
+GET / - Lấy danh sách sản phẩm (có filter và phân trang)
+POST / - Tạo sản phẩm mới
+GET /:id - Xem chi tiết sản phẩm
+PUT /:id - Cập nhật sản phẩm
+DELETE /:id - Xóa sản phẩm
+
+Quản lý trạng thái và hình ảnh:
+PUT /:id/status - Cập nhật trạng thái sản phẩm
+PUT /:id/images - Quản lý hình ảnh sản phẩm
+
+Thống kê:
+GET /stats/overview - Xem thống kê sản phẩm (theo trạng thái và danh mục)
+
+Categories: /api/admin/categories
+GET / - Lấy tất cả danh mục
+POST / - Tạo danh mục mới
+GET /:id - Xem chi tiết danh mục
+PUT /:id - Cập nhật danh mục
+DELETE /:id - Xóa danh mục
+
+Orders: /api/admin/orders
+GET / - Lấy tất cả đơn hàng
+GET /:id - Xem chi tiết đơn hàng
+PUT /:id - Cập nhật trạng thái đơn hàng
+GET /stats/overview - Thống kê đơn hàng
+GET /stats/revenue - Thống kê doanh thu
+
+Users: /api/admin/users
+GET / - Lấy danh sách người dùng
+GET /:id - Xem chi tiết người dùng
+PUT /:id - Cập nhật trạng thái người dùng
+GET /stats/overview - Thống kê người dùng
+GET /:id/activity - Xem hoạt động người dùng
+
+Coupons: /api/admin/coupons
+GET / - Lấy tất cả mã giảm giá
+POST / - Tạo mã giảm giá mới
+GET /:id - Xem chi tiết mã giảm giá
+PUT /:id - Cập nhật mã giảm giá
+DELETE /:id - Xóa mã giảm giá
+GET /stats/usage - Thống kê sử dụng
+
+
+
+====================================================
+API Endpoints cho Customer:
+Products: /api/products
+GET / - Lấy danh sách sản phẩm
+GET /search - Tìm kiếm sản phẩm
+GET /:id - Xem chi tiết sản phẩm
+POST /:id/reviews - Đánh giá sản phẩm
+
+Cart: /api/cart
+GET / - Xem giỏ hàng
+POST / - Thêm vào giỏ hàng
+PUT /:itemId - Cập nhật số lượng
+DELETE /:itemId - Xóa sản phẩm
+DELETE / - Xóa toàn bộ giỏ hàng
+
+Orders: /api/orders
+GET / - Xem đơn hàng của tôi
+POST / - Tạo đơn hàng mới
+GET /:id - Xem chi tiết đơn hàng
+POST /:id - Hủy đơn hàng
+
+Addresses: /api/addresses
+GET / - Lấy danh sách địa chỉ
+POST / - Thêm địa chỉ mới
+PUT /:id - Cập nhật địa chỉ
+DELETE /:id - Xóa địa chỉ
+POST /:id/default - Đặt địa chỉ mặc định
+
+Favorites: /api/favorites
+GET / - Xem danh sách yêu thích
+POST /:productId - Thêm vào yêu thích
+DELETE /:productId - Xóa khỏi yêu thích
+GET /:productId/check - Kiểm tra trạng thái
+
+Notifications: /api/notifications
+GET / - Xem thông báo
+POST /:id - Đánh dấu đã đọc
+DELETE /:id - Xóa thông báo
+POST /mark-all-read - Đánh dấu tất cả đã đọc
+GET /unread/count - Đếm thông báo chưa đọc
+
+Coupons: /api/coupons
+GET /available - Xem mã giảm giá có thể dùng
+GET /used - Xem mã giảm giá đã dùng
+POST /apply - Áp dụng mã giảm giá
+POST /save-usage - Lưu thông tin sử dụng
