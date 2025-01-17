@@ -75,6 +75,26 @@ const userCouponSchema = new Schema({
     timestamps: true // Tự động thêm createdAt và updatedAt
 });
 
+// Virtual field để lấy thông tin chi tiết của coupon
+userCouponSchema.virtual('couponInfo', {
+    ref: 'Coupon',
+    localField: 'couponID',
+    foreignField: 'couponID',
+    justOne: true
+});
+
+// Virtual field để lấy thông tin chi tiết của order từ usageHistory
+userCouponSchema.virtual('usageHistory.orderInfo', {
+    ref: 'Order',
+    localField: 'usageHistory.orderID',
+    foreignField: 'orderID',
+    justOne: true
+});
+
+// Đảm bảo virtual fields được hiển thị khi chuyển đổi sang JSON
+userCouponSchema.set('toJSON', { virtuals: true });
+userCouponSchema.set('toObject', { virtuals: true });
+
 // Thêm index cho các trường thường được tìm kiếm
 userCouponSchema.index({ userID: 1, couponID: 1 }, { unique: true }); // Mỗi user chỉ có thể có 1 mã giảm giá một lần
 userCouponSchema.index({ status: 1 });
@@ -113,22 +133,6 @@ userCouponSchema.pre('save', async function(next) {
     } catch (error) {
         next(error);
     }
-});
-
-// Virtual field để lấy thông tin mã giảm giá
-userCouponSchema.virtual('couponInfo', {
-    ref: 'Coupon',         // Model tham chiếu
-    localField: 'couponID', // Thuộc tính của model hiện tại
-    foreignField: 'couponID', // Thuộc tính của model tham chiếu
-    justOne: true          // Chỉ lấy 1 kết quả
-});
-
-// Virtual field để lấy thông tin người dùng
-userCouponSchema.virtual('userInfo', {
-    ref: 'User',          // Model tham chiếu
-    localField: 'userID', // Thuộc tính của model hiện tại
-    foreignField: 'userID', // Thuộc tính của model tham chiếu
-    justOne: true        // Chỉ lấy 1 kết quả
 });
 
 // Method để sử dụng mã giảm giá

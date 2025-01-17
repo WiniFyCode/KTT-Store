@@ -1,6 +1,7 @@
 const Favorite = require('../models/Favorite');
 const ProductSizeStock = require('../models/ProductSizeStock');
 const Product = require('../models/Product');
+const ProductColor = require('../models/ProductColor');
 
 class FavoriteController {
     // Lấy danh sách yêu thích của user
@@ -13,28 +14,55 @@ class FavoriteController {
             const favorites = await Favorite.find({ userID })
                 .sort('-addedAt')
                 .skip((page - 1) * limit)
-                .limit(limit)
-                .populate({
-                    path: 'SKU',
-                    populate: {
-                        path: 'productID',
-                        model: 'Product',
-                        populate: ['targetInfo', 'categoryInfo', 'colors']
-                    }
+                .limit(limit);
+
+            // Lấy thông tin chi tiết sản phẩm
+            const items = await Promise.all(favorites.map(async (fav) => {
+                // Tìm thông tin ProductSizeStock
+                const sizeStock = await ProductSizeStock.findOne({ SKU: fav.SKU });
+
+                if (!sizeStock) {
+                    return {
+                        favoriteID: fav.favoriteID,
+                        note: fav.note,
+                        addedAt: fav.addedAt,
+                        error: 'Sản phẩm không còn tồn tại'
+                    };
+                }
+
+                // Parse productID và colorID từ SKU (format: productID_colorID_size_version)
+                const [productID, colorID] = sizeStock.SKU.split('_');
+
+                // Lấy thông tin sản phẩm và màu sắc
+                const product = await Product.findOne({ productID: parseInt(productID) })
+                    .populate('targetInfo')
+                    .populate('categoryInfo');
+
+                const color = await ProductColor.findOne({ 
+                    productID: parseInt(productID),
+                    colorID: parseInt(colorID)
                 });
+                
+                return {
+                    favoriteID: fav.favoriteID,
+                    product: {
+                        productID: product.productID,
+                        name: product.name,
+                        price: product.price,
+                        imageURL: product.imageURL,
+                        category: product.categoryInfo,
+                        target: product.targetInfo
+                    },
+                    size: sizeStock.size,
+                    color: color,
+                    stock: sizeStock.stock,
+                    note: fav.note,
+                    addedAt: fav.addedAt
+                };
+            }));
 
             // Đếm tổng số item yêu thích
             const total = await Favorite.countDocuments({ userID });
-
-            // Format lại dữ liệu trả về
-            const items = favorites.map(fav => ({
-                favoriteID: fav.favoriteID,
-                product: fav.SKU.productID,
-                size: fav.SKU.size,
-                color: fav.SKU.color,
-                note: fav.note,
-                addedAt: fav.addedAt
-            }));
 
             res.json({
                 items,

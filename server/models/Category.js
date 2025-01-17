@@ -28,7 +28,6 @@ const categorySchema = new Schema({
 
 // Thêm index cho các trường thường được tìm kiếm
 categorySchema.index({ name: 1 });
-categorySchema.index({ categoryID: 1 });
 
 // Tạo model từ schema
 const Category = mongoose.model('Category', categorySchema, 'categories');

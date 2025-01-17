@@ -244,13 +244,33 @@ class CouponController {
                 return res.status(400).json({ message: 'Mã giảm giá đã hết lượt sử dụng' });
             }
 
-            // Kiểm tra số lần sử dụng của user
-            const userUsage = await UserCoupon.countDocuments({
+            // Kiểm tra và cập nhật UserCoupon
+            let userCoupon = await UserCoupon.findOne({
                 couponID: coupon.couponID,
                 userID
             });
-            if (userUsage >= coupon.maxUsagePerUser) {
-                return res.status(400).json({ message: 'Bạn đã sử dụng hết lượt của mã giảm giá này' });
+
+            if (userCoupon) {
+                // Nếu đã có bản ghi, kiểm tra số lượt còn lại
+                if (userCoupon.usageLeft <= 0) {
+                    return res.status(400).json({ message: 'Bạn đã sử dụng hết lượt của mã giảm giá này' });
+                }
+                // Cập nhật số lượt còn lại
+                userCoupon.usageLeft -= 1;
+                await userCoupon.save();
+            } else {
+                // Tạo UserCoupon mới nếu chưa có
+                const lastUserCoupon = await UserCoupon.findOne().sort({ userCouponsID: -1 });
+                const userCouponsID = lastUserCoupon ? lastUserCoupon.userCouponsID + 1 : 1;
+
+                userCoupon = new UserCoupon({
+                    userCouponsID,
+                    couponID: coupon.couponID,
+                    userID,
+                    usageLeft: coupon.maxUsagePerUser - 1, // Trừ đi 1 vì đang sử dụng
+                    expiryDate: coupon.endDate
+                });
+                await userCoupon.save();
             }
 
             // Tính số tiền giảm
@@ -267,24 +287,11 @@ class CouponController {
                 );
             }
 
-            // Tạo UserCoupon mới
-            const lastUserCoupon = await UserCoupon.findOne().sort({ userCouponsID: -1 });
-            const userCouponsID = lastUserCoupon ? lastUserCoupon.userCouponsID + 1 : 1;
-
-            const userCoupon = new UserCoupon({
-                userCouponsID,
-                couponID: coupon.couponID,
-                userID,
-                usageLeft: 1
-            });
-
-            await userCoupon.save();
-
             res.json({
                 message: 'Áp dụng mã giảm giá thành công',
                 coupon,
                 discountAmount,
-                userCouponsID
+                userCouponsID: userCoupon.userCouponsID
             });
         } catch (error) {
             res.status(500).json({
@@ -305,8 +312,14 @@ class CouponController {
                 .sort('-createdAt')
                 .skip((page - 1) * limit)
                 .limit(limit)
-                .populate('couponInfo')
-                .populate('usageHistory.orderInfo');
+                .populate({
+                    path: 'couponInfo',
+                    select: 'code description discountType discountValue'
+                })
+                .populate({
+                    path: 'usageHistory.orderInfo',
+                    select: 'orderID totalAmount status'
+                });
 
             // Đếm tổng số mã đã sử dụng
             const total = await UserCoupon.countDocuments({ userID });

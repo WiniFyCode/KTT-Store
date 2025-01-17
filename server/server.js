@@ -52,13 +52,14 @@ app.use('/api/order-detail', authenticateCustomer, orderDetailRoutes);// Quản 
 app.use('/api/user', authenticateCustomer, userRoutes);// Quản lý thông tin cá nhân
 app.use('/api/review', authenticateCustomer, reviewRoutes);// Đánh giá sản phẩm
 app.use('/api/order', authenticateCustomer, orderRoutes);// Quản lý đơn hàng
+app.use('/api/coupon', authenticateCustomer, couponRoutes);// Quản lý mã giảm giá
 app.use('/api/address', authenticateCustomer, addressRoutes);// Quản lý địa chỉ
 // app.use('/api/payment', authenticateCustomer, paymentRoutes);// Thanh toán
 
 // Admin routes (cần xác thực admin)
 app.use('/api/admin', authenticateAdmin, (req, res, next) => {
-    console.log("Đã xác thực admin");
-    next();
+  console.log("Đã xác thực admin");
+  next();
 });
 
 app.use('/api/admin/products', authenticateAdmin, productRoutes);// Quản lý sản phẩm
