@@ -27,7 +27,7 @@ const authRoutes = require('./routes/auth.route');
 const { authenticateAdmin, authenticateCustomer } = require("./middlewares/auth.middleware");
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);// Đăng ký và đăng nhập
 
 // Khởi động server
 const PORT = process.env.PORT || 5000;
