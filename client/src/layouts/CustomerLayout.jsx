@@ -54,9 +54,11 @@ const CustomerLayout = () => {
 
   // Xử lý đăng xuất
   const handleLogout = () => {
-    // Xóa token và thông tin user khỏi localStorage
     localStorage.removeItem('customerToken');
     localStorage.removeItem('customerInfo');
+    
+    // Dispatch event để thông báo thay đổi auth
+    window.dispatchEvent(new Event('authChange'));
     
     // Hiển thị thông báo
     toast.success('Đăng xuất thành công!');
@@ -65,10 +67,30 @@ const CustomerLayout = () => {
     navigate('/login');
   };
 
-  // Kiểm tra trạng thái đăng nhập khi component mount
+  // Kiểm tra trạng thái đăng nhập khi component mount và khi có thay đổi
   useEffect(() => {
-    const token = localStorage.getItem('customerToken');
-    setIsLoggedIn(!!token);
+    const checkLoginStatus = () => {
+      const token = localStorage.getItem('customerToken');
+      setIsLoggedIn(!!token);
+    };
+
+    // Kiểm tra khi component mount
+    checkLoginStatus();
+
+    // Tạo custom event để lắng nghe thay đổi auth
+    const handleAuthChange = () => {
+      checkLoginStatus();
+    };
+
+    // Đăng ký lắng nghe sự kiện
+    window.addEventListener('authChange', handleAuthChange);
+    window.addEventListener('storage', handleAuthChange);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('authChange', handleAuthChange);
+      window.removeEventListener('storage', handleAuthChange);
+    };
   }, []);
 
   return (

@@ -16,7 +16,7 @@ const AdminLayout = () => {
         // Xóa token khỏi localStorage
         localStorage.removeItem('adminToken');
         // Chuyển về trang đăng nhập
-        navigate('/admin/login');
+        navigate('/login');
     };
 
     return (
