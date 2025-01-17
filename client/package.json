@@ -29,6 +29,7 @@
     "react-toastify": "^11.0.2",
     "react-tooltip": "^5.28.0",
     "react-transition-group": "^4.4.5",
+    "sweetalert2": "^11.15.10",
     "swiper": "^11.2.1"
   },
   "devDependencies": {

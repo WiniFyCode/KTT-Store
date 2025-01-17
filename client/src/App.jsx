@@ -4,14 +4,11 @@ import { ThemeProvider as AdminThemeProvider } from './contexts/AdminThemeContex
 import { ThemeProvider as CustomerThemeProvider } from './contexts/CustomerThemeContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AdminRoute, AuthRoute } from './components/PrivateRoute';
 
 // Admin Pages
-import AdminLogin from "./pages/admin/Login";
-import AdminRegister from "./pages/admin/Register";
-import AdminForgotPassword from "./pages/admin/ForgotPassword";
 import Dashboard from './pages/admin/Dashboard';
 import Customers from './pages/admin/CustomerMangement';
-// import Products from "./pages/admin/ProductManagement";
 import ProductBackup from "./pages/admin/ProductManagement.backup";
 import Orders from "./pages/admin/OrderManagement";
 import Coupons from "./pages/admin/CouponManagement";
@@ -81,16 +78,21 @@ function App() {
               <Route path="new-arrivals" element={<NewArrivals />} />
               <Route path="tet-collection" element={<TetCollection />} />
               <Route path="product/:id" element={<ProductDetail />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="checkout" element={<Checkout />} />
-              <Route path="wishlist" element={<Wishlist />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="orders" element={<CustomerOrders />} />
-              <Route path="orders/:id" element={<OrderDetail />} />
-              <Route path="order-history" element={<OrderHistory />} />
+              <Route path="cart" element={<AuthRoute><Cart /></AuthRoute>} />
+              <Route path="checkout" element={<AuthRoute><Checkout /></AuthRoute>} />
+              <Route path="wishlist" element={<AuthRoute><Wishlist /></AuthRoute>} />
+              <Route path="profile" element={<AuthRoute><Profile /></AuthRoute>} />
+              <Route path="orders" element={<AuthRoute><CustomerOrders /></AuthRoute>} />
+              <Route path="orders/:id" element={<AuthRoute><OrderDetail /></AuthRoute>} />
+              <Route path="order-history" element={<AuthRoute><OrderHistory /></AuthRoute>} />
               <Route path="news" element={<News />} />
               <Route path="news/:id" element={<NewsDetail />} />
               <Route path="about" element={<About />} />
+              
+              {/* Auth Routes */}
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
 
               {/* Policy Pages */}
               <Route path="policy">
@@ -115,18 +117,8 @@ function App() {
               <Route path="promotion" element={<Promotion />} />
             </Route>
 
-            {/* Customer Auth Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-
-            {/* Admin Auth Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/register" element={<AdminRegister />} />
-            <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
-
             {/* Routes sử dụng AdminLayout */}
-            <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
               {/* Chuyển hướng /admin về /admin/dashboard */}
               <Route index element={<Navigate to="/admin/dashboard" replace />} />
               <Route path="dashboard" element={<Dashboard />} />
