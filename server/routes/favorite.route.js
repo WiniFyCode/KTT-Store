@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const FavoriteController = require('../controllers/FavoriteController');
-const { verifyToken } = require('../middleware/auth');
+const { authenticateToken } = require('../middlewares/auth.middleware');
 
 // Tất cả routes đều yêu cầu đăng nhập
-router.use(verifyToken);
+router.use(authenticateToken);
 
 // Routes cho danh sách yêu thích
 router.get('/', FavoriteController.getFavorites); // Lấy danh sách yêu thích của user

@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const NotificationController = require('../controllers/NotificationController');
-const { verifyToken, isAdmin } = require('../middleware/auth');
+const { authenticateToken, isAdmin } = require('../middlewares/auth.middleware');
 
 // Tất cả routes đều yêu cầu đăng nhập
-router.use(verifyToken);
+router.use(authenticateToken);
 
 // Routes cho admin
-router.get('/all', verifyToken, isAdmin, NotificationController.getAllNotifications); // Lấy tất cả thông báo
-router.post('/create', verifyToken, isAdmin, NotificationController.createNotification); // Tạo thông báo mới
-router.put('/:id', verifyToken, isAdmin, NotificationController.updateNotification); // Cập nhật thông báo
-router.delete('/:id', verifyToken, isAdmin, NotificationController.deleteNotification); // Xóa thông báo
+router.get('/all', authenticateToken, isAdmin, NotificationController.getAllNotifications); // Lấy tất cả thông báo
+router.post('/create', authenticateToken, isAdmin, NotificationController.createNotification); // Tạo thông báo mới
+router.put('/:id', authenticateToken, isAdmin, NotificationController.updateNotification); // Cập nhật thông báo
+router.delete('/:id', authenticateToken, isAdmin, NotificationController.deleteNotification); // Xóa thông báo
 
 // Routes cho user
 router.get('/', NotificationController.getUserNotifications); // Lấy thông báo của user

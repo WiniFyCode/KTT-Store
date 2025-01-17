@@ -6,44 +6,59 @@ class CartController {
     // Lấy giỏ hàng của user
     async getCart(req, res) {
         try {
+            // Lấy các items trong giỏ hàng
             const userID = req.user.userID;
 
             // Lấy các items trong giỏ hàng
-            const cartItems = await Cart.find({ userID })
-                .populate({
-                    path: 'SKU',
-                    populate: {
-                        path: 'productID',
-                        model: 'Product',
-                        populate: ['targetInfo', 'categoryInfo', 'colors']
-                    }
-                });
+            const cartItems = await Cart.find({ userID });
 
             // Tính tổng tiền
             let totalAmount = 0;
             const items = await Promise.all(cartItems.map(async (item) => {
+                // Tìm thông tin size và stock
                 const sizeStock = await ProductSizeStock.findOne({ SKU: item.SKU });
-                const price = sizeStock.price;
+                if (!sizeStock) {
+                    throw new Error(`Không tìm thấy thông tin size cho SKU: ${item.SKU}`);
+                }
+
+                // Parse productID từ SKU (format: productID_colorID_size_version)
+                // Ví dụ: SKU = "1_1_S_1" => productID = 1
+                const [productID] = sizeStock.SKU.split('_');
+
+                // Lấy thông tin sản phẩm
+                const product = await Product.findOne({ productID: parseInt(productID) })
+                    .populate(['targetInfo', 'categoryInfo', 'colors']);
+                if (!product) {
+                    throw new Error(`Không tìm thấy thông tin sản phẩm cho productID: ${productID}`);
+                }
+
+                // Tính tổng giá trị của mỗi sản phẩm
+                const price = product.price;
                 const subtotal = price * item.quantity;
                 totalAmount += subtotal;
 
+                // Trả về dữ liệu
                 return {
                     cartID: item.cartID,
-                    product: item.SKU.productID,
+                    product,
                     size: sizeStock.size,
-                    color: item.SKU.color,
+                    color: sizeStock.color,
                     quantity: item.quantity,
                     price,
-                    subtotal
+                    subtotal,
+                    stock: sizeStock.stock
                 };
             }));
 
+            // Trả về dữ liệu
             res.json({
+                message: 'Lấy giỏ hàng thành công',
                 items,
                 totalAmount,
                 itemCount: items.length
             });
         } catch (error) {
+            console.error('Error in getCart:', error);
             res.status(500).json({
                 message: 'Có lỗi xảy ra khi lấy giỏ hàng',
                 error: error.message
@@ -74,7 +89,7 @@ class CartController {
                 // Nếu đã có, cập nhật số lượng
                 const newQuantity = cartItem.quantity + quantity;
                 if (newQuantity > stockItem.stock) {
-                    return res.status(400).json({ message: 'Số lượng sản phẩm trong kho không đủ' });
+                    return res.status(400).json({ message: 'Số lượng sản phẩm trong kho không đủ', maxQuantity: stockItem.stock });
                 }
 
                 cartItem.quantity = newQuantity;
@@ -121,7 +136,7 @@ class CartController {
             // Kiểm tra số lượng tồn kho
             const stockItem = await ProductSizeStock.findOne({ SKU: cartItem.SKU });
             if (stockItem.stock < quantity) {
-                return res.status(400).json({ message: 'Số lượng sản phẩm trong kho không đủ' });
+                return res.status(400).json({ message: 'Số lượng sản phẩm trong kho không đủ', maxQuantity: stockItem.stock });
             }
 
             // Cập nhật số lượng

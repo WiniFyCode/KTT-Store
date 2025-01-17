@@ -1,0 +1,400 @@
+{
+	"info": {
+		"_postman_id": "1234567-89ab-cdef-0123-456789abcdef",
+		"name": "KTT Store API",
+		"description": "API collection cho KTT Store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"description": "Các API liên quan đến xác thực người dùng",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullname\": \"Nguyễn Văn A\",\n    \"gender\": \"male\",\n    \"email\": \"nguyenvana@example.com\",\n    \"password\": \"Test123\",\n    \"phone\": \"0987654321\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "register"]
+						},
+						"description": "API đăng ký tài khoản mới\n\n**Request Body:**\n```json\n{\n    \"fullname\": \"Nguyễn Văn A\",\n    \"gender\": \"male\",\n    \"email\": \"nguyenvana@example.com\",\n    \"password\": \"Test123\",\n    \"phone\": \"0987654321\"\n}\n```\n\n**Validation:**\n- fullname: Bắt buộc, 2-50 ký tự\n- gender: Bắt buộc, chỉ chấp nhận 'male' hoặc 'female'\n- email: Bắt buộc, định dạng email hợp lệ, không trùng\n- password: Bắt buộc, ít nhất 6 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường và 1 số\n- phone: Bắt buộc, định dạng số điện thoại Việt Nam (0[3|5|7|8|9]xxxxxxxx), không trùng\n\n**Success Response (201):**\n```json\n{\n    \"success\": true,\n    \"message\": \"Đăng ký tài khoản thành công\",\n    \"token\": \"jwt_token\",\n    \"user\": {\n        \"userID\": 1234567890,\n        \"fullname\": \"Nguyễn Văn A\",\n        \"email\": \"nguyenvana@example.com\",\n        \"phone\": \"0987654321\",\n        \"gender\": \"male\",\n        \"role\": \"customer\"\n    }\n}\n```\n\n**Error Response:**\n```json\n{\n    \"message\": \"Có lỗi xảy ra khi đăng ký tài khoản\",\n    \"error\": \"User validation failed: fullname: Vui lòng nhập họ và tên...\"\n}\n```"
+					}
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"nguyenvana@example.com\",\n    \"password\": \"Test123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "login"]
+						},
+						"description": "API đăng nhập\n\n**Request Body:**\n```json\n{\n    \"email\": \"nguyenvana@example.com\",\n    \"password\": \"Test123\"\n}\n```\n\n**Validation:**\n- email: Bắt buộc, định dạng email hợp lệ\n- password: Bắt buộc\n\n**Success Response (200):**\n```json\n{\n    \"success\": true,\n    \"message\": \"Đăng nhập thành công\",\n    \"token\": \"jwt_token\",\n    \"user\": {\n        \"userID\": 1234567890,\n        \"fullname\": \"Nguyễn Văn A\",\n        \"email\": \"nguyenvana@example.com\",\n        \"phone\": \"0987654321\",\n        \"gender\": \"male\",\n        \"role\": \"customer\"\n    }\n}\n```\n\n**Error Response:**\n- Sai thông tin đăng nhập:\n```json\n{\n    \"message\": \"Email hoặc mật khẩu không đúng\",\n    \"attemptsLeft\": 4\n}\n```\n- Tài khoản bị khóa:\n```json\n{\n    \"message\": \"Tài khoản đang bị khóa. Vui lòng thử lại sau X phút\"\n}\n```"
+					}
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"nguyenvana@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/forgot-password",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "forgot-password"]
+						},
+						"description": "API quên mật khẩu - Gửi mã OTP qua email\n\n**Request Body:**\n```json\n{\n    \"email\": \"nguyenvana@example.com\"\n}\n```\n\n**Validation:**\n- email: Bắt buộc, định dạng email hợp lệ, phải tồn tại trong hệ thống\n\n**Success Response (200):**\n```json\n{\n    \"message\": \"Mã OTP đã được gửi đến email của bạn\",\n    \"email\": \"nguyenvana@example.com\"\n}\n```\n\n**Error Response:**\n```json\n{\n    \"message\": \"Email không tồn tại trong hệ thống\"\n}\n```"
+					}
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"nguyenvana@example.com\",\n    \"otp\": \"123456\",\n    \"newPassword\": \"NewTest123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/reset-password",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "reset-password"]
+						},
+						"description": "API đặt lại mật khẩu với mã OTP\n\n**Request Body:**\n```json\n{\n    \"email\": \"nguyenvana@example.com\",\n    \"otp\": \"123456\",\n    \"newPassword\": \"NewTest123\"\n}\n```\n\n**Validation:**\n- email: Bắt buộc, phải khớp với email đã gửi OTP\n- otp: Bắt buộc, mã 6 số đã gửi qua email\n- newPassword: Bắt buộc, ít nhất 6 ký tự, phải chứa ít nhất 1 chữ hoa, 1 chữ thường và 1 số\n\n**Success Response (200):**\n```json\n{\n    \"message\": \"Đặt lại mật khẩu thành công\"\n}\n```\n\n**Error Response:**\n```json\n{\n    \"message\": \"Mã OTP không chính xác\"\n}\n```\nhoặc\n```json\n{\n    \"message\": \"Mã OTP đã hết hạn\"\n}\n```"
+					}
+				}
+			]
+		},
+		{
+			"name": "Public APIs",
+			"description": "Các API công khai, không cần xác thực",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/products",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products"]
+						},
+						"description": "Lấy danh sách tất cả sản phẩm"
+					}
+				},
+				{
+					"name": "Get Product Detail",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/products/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "products", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "product_id"
+								}
+							]
+						},
+						"description": "Lấy chi tiết một sản phẩm"
+					}
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/categories",
+							"host": ["{{base_url}}"],
+							"path": ["api", "categories"]
+						},
+						"description": "Lấy danh sách tất cả danh mục"
+					}
+				}
+			]
+		},
+		{
+			"name": "Customer APIs",
+			"description": "Các API yêu cầu xác thực customer",
+			"item": [
+				{
+					"name": "Cart Management",
+					"item": [
+						{
+							"name": "Get Cart",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/cart",
+									"host": ["{{base_url}}"],
+									"path": ["api", "cart"]
+								},
+								"description": "Lấy thông tin giỏ hàng của người dùng hiện tại"
+							}
+						},
+						{
+							"name": "Add to Cart",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": \"product_id\",\n    \"quantity\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cart",
+									"host": ["{{base_url}}"],
+									"path": ["api", "cart"]
+								},
+								"description": "Thêm sản phẩm vào giỏ hàng"
+							}
+						}
+					]
+				},
+				{
+					"name": "Order Management",
+					"item": [
+						{
+							"name": "Create Order",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"addressId\": \"address_id\",\n    \"items\": [\n        {\n            \"productId\": \"product_id\",\n            \"quantity\": 1\n        }\n    ],\n    \"paymentMethod\": \"COD\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/order",
+									"host": ["{{base_url}}"],
+									"path": ["api", "order"]
+								},
+								"description": "Tạo đơn hàng mới"
+							}
+						},
+						{
+							"name": "Get Orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/order",
+									"host": ["{{base_url}}"],
+									"path": ["api", "order"]
+								},
+								"description": "Lấy danh sách đơn hàng của người dùng"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Admin APIs",
+			"description": "Các API yêu cầu xác thực admin",
+			"item": [
+				{
+					"name": "Product Management",
+					"item": [
+						{
+							"name": "Create Product",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Tên sản phẩm\",\n    \"description\": \"Mô tả sản phẩm\",\n    \"price\": 100000,\n    \"categoryId\": \"category_id\",\n    \"images\": [\"url1\", \"url2\"],\n    \"stock\": 100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/products",
+									"host": ["{{base_url}}"],
+									"path": ["api", "admin", "products"]
+								},
+								"description": "Tạo sản phẩm mới (Admin)"
+							}
+						},
+						{
+							"name": "Update Product",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Tên sản phẩm mới\",\n    \"description\": \"Mô tả sản phẩm mới\",\n    \"price\": 150000,\n    \"stock\": 150\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/products/:id",
+									"host": ["{{base_url}}"],
+									"path": ["api", "admin", "products", ":id"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "product_id"
+										}
+									]
+								},
+								"description": "Cập nhật thông tin sản phẩm (Admin)"
+							}
+						}
+					]
+				},
+				{
+					"name": "User Management",
+					"item": [
+						{
+							"name": "Get All Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/admin/users",
+									"host": ["{{base_url}}"],
+									"path": ["api", "admin", "users"]
+								},
+								"description": "Lấy danh sách tất cả người dùng (Admin)"
+							}
+						},
+						{
+							"name": "Update User Status",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"isDisabled\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/users/:id/status",
+									"host": ["{{base_url}}"],
+									"path": ["api", "admin", "users", ":id", "status"],
+									"variable": [
+										{
+											"key": "id",
+											"value": "user_id"
+										}
+									]
+								},
+								"description": "Cập nhật trạng thái người dùng (Admin)"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

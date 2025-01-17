@@ -37,7 +37,10 @@ class AddressController {
                 return res.status(404).json({ message: 'Không tìm thấy địa chỉ' });
             }
 
-            res.json(address);
+            res.json({
+                message: 'Lấy thông tin địa chỉ thành công',
+                address
+            });
         } catch (error) {
             res.status(500).json({
                 message: 'Có lỗi xảy ra khi lấy thông tin địa chỉ',

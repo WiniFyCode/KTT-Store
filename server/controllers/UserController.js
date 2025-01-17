@@ -241,19 +241,23 @@ class UserController {
     // USER: Cập nhật thông tin cá nhân
     async updateProfile(req, res) {
         try {
+            // Lấy userID từ token đăng nhập
             const userID = req.user.userID;
+            // Lấy thông tin cần update từ body request
             const { fullname, gender, phone } = req.body;
-
+            
+            // Tìm user trong database
             const user = await User.findOne({ userID });
             if (!user) {
                 return res.status(404).json({ message: 'Không tìm thấy người dùng' });
             }
-
-            // Kiểm tra số điện thoại mới có bị trùng không
+            
+            // Kiểm tra nếu số điện thoại mới khác số cũ
             if (phone && phone !== user.phone) {
+                // Kiểm tra xem số điện thoại mới có trùng với user khác không
                 const existingUser = await User.findOne({
                     phone,
-                    userID: { $ne: userID }
+                    userID: { $ne: userID } // Loại trừ user hiện tại
                 });
                 if (existingUser) {
                     return res.status(400).json({
@@ -261,12 +265,13 @@ class UserController {
                     });
                 }
             }
-
-            // Cập nhật thông tin
+            
+            // Cập nhật thông tin mới (chỉ cập nhật nếu có gửi lên)
             if (fullname) user.fullname = fullname;
             if (gender) user.gender = gender;
             if (phone) user.phone = phone;
-
+            
+            // Lưu vào database
             await user.save();
 
             // Loại bỏ thông tin nhạy cảm trước khi trả về
@@ -290,9 +295,12 @@ class UserController {
     // USER: Đổi mật khẩu
     async changePassword(req, res) {
         try {
+            // Lấy userID từ token đăng nhập
             const userID = req.user.userID;
+            // Lấy thông tin mật khẩu mới từ request body
             const { currentPassword, newPassword } = req.body;
 
+            // Tìm user trong database bằng userID
             const user = await User.findOne({ userID });
             if (!user) {
                 return res.status(404).json({ message: 'Không tìm thấy người dùng' });

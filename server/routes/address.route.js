@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const AddressController = require('../controllers/AddressController');
-const { verifyToken } = require('../middleware/auth');
+const { authenticateToken } = require('../middlewares/auth.middleware');
 
 // Tất cả routes đều yêu cầu đăng nhập
-router.use(verifyToken);
+router.use(authenticateToken);
 
 router.get('/', AddressController.getAddresses); // Lấy danh sách địa chỉ
 router.get('/:id', AddressController.getAddressById); // Lấy chi tiết địa chỉ
