@@ -12,5 +12,6 @@ router.post('/', authenticateToken, isAdmin, ProductController.createProduct); /
 router.put('/:id', authenticateToken, isAdmin, ProductController.updateProduct); // Cập nhật sản phẩm
 router.delete('/:id', authenticateToken, isAdmin, ProductController.deleteProduct); // Xóa sản phẩm (soft delete)
 router.patch('/:id/restore', authenticateToken, isAdmin, ProductController.restoreProduct); // Khôi phục sản phẩm
+router.get('/admin/products', authenticateToken, isAdmin, ProductController.getProductsChoADMIN); // Lấy danh sách sản phẩm cho admin
 
 module.exports = router;

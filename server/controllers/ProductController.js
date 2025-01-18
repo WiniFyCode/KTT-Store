@@ -41,18 +41,131 @@ class ProductController {
                 .skip((page - 1) * limit)
                 .limit(limit)
                 .populate('targetInfo')
-                .populate('categoryInfo')
-                .populate('colors')
-                .populate('sizes');
+                .populate('categoryInfo');
+            //! PHAI DEM COLOR ID DE TRUY VAN QUA BANG SIZESTOCK LAY RA SIZE S , M , L
+            // Lấy colors và sizes cho từng sản phẩm
+            const productsWithDetails = await Promise.all(products.map(async (product) => {
+                const colors = await ProductColor.find({ productID: product.productID });
+                const colorsWithSizes = await Promise.all(colors.map(async (color) => {
+                    const sizes = await ProductSizeStock.find({ colorID: color.colorID });
+                    return {
+                        ...color.toObject(),
+                        sizes
+                    };
+                }));
+                return {
+                    ...product.toObject(),
+                    colors: colorsWithSizes
+                };
+            }));
 
             // Đếm tổng số sản phẩm
             const total = await Product.countDocuments(query);
 
             res.json({
-                products,
+                products: productsWithDetails,
                 total,
                 totalPages: Math.ceil(total / limit),
                 currentPage: page
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: 'Có lỗi xảy ra khi lấy danh sách sản phẩm',
+                error: error.message
+            });
+        }
+    }
+
+    // Lấy danh sách sản phẩm cho ADMIN với prefetch
+    async getProductsChoADMIN(req, res) {
+        try {
+            const {
+                page = 1,
+                limit = 10,
+                sort = '-createdAt',
+                category,
+                target,
+                minPrice,
+                maxPrice,
+                search,
+                isActivated,
+                prefetch = false // Thêm option prefetch
+            } = req.query;
+
+            // Xây dựng query
+            const query = {};
+            if (typeof isActivated !== 'undefined') {
+                query.isActivated = isActivated === 'true';
+            }
+
+            // Thêm điều kiện lọc
+            if (category) query.categoryID = category;
+            if (target) query.targetID = target;
+            if (minPrice || maxPrice) {
+                query.price = {};
+                if (minPrice) query.price.$gte = minPrice;
+                if (maxPrice) query.price.$lte = maxPrice;
+            }
+            if (search) {
+                query.$text = { $search: search };
+            }
+
+            // Tính toán số lượng sản phẩm cần lấy
+            const currentPage = parseInt(page);
+            const itemsPerPage = parseInt(limit);
+            const prefetchPages = prefetch ? 2 : 0; // Số trang muốn tải trước
+            const totalItemsToFetch = itemsPerPage * (1 + prefetchPages); // Số items cần lấy (bao gồm cả prefetch)
+            const skipItems = (currentPage - 1) * itemsPerPage;
+
+            // Thực hiện query với prefetch
+            const products = await Product.find(query)
+                .select('productID name price thumbnail isActivated categoryID targetID createdAt')
+                .sort(sort)
+                .skip(skipItems)
+                .limit(totalItemsToFetch)
+                .populate('targetInfo', 'targetID name')
+                .populate('categoryInfo', 'categoryID name');
+
+            // Lấy colors và sizes cho từng sản phẩm (chỉ lấy thông tin cần thiết)
+            const productsWithDetails = await Promise.all(products.map(async (product) => {
+                const colors = await ProductColor.find({ productID: product.productID })
+                    .select('colorID colorName colorCode');
+
+                const colorsWithSizes = await Promise.all(colors.map(async (color) => {
+                    const sizes = await ProductSizeStock.find({ colorID: color.colorID })
+                        .select('size stock SKU');
+                    return {
+                        ...color.toObject(),
+                        sizes: sizes.map(size => ({
+                            size: size.size,
+                            stock: size.stock,
+                            SKU: size.SKU
+                        }))
+                    };
+                }));
+
+                return {
+                    ...product.toObject(),
+                    colors: colorsWithSizes
+                };
+            }));
+
+            // Đếm tổng số sản phẩm
+            const total = await Product.countDocuments(query);
+            const totalPages = Math.ceil(total / itemsPerPage);
+
+            // Chia dữ liệu thành current và prefetch
+            const currentPageData = productsWithDetails.slice(0, itemsPerPage);
+            const prefetchData = productsWithDetails.slice(itemsPerPage);
+
+            res.json({
+                products: currentPageData,
+                prefetchedProducts: prefetch ? prefetchData : [], // Trả về dữ liệu prefetch nếu có yêu cầu
+                total,
+                totalPages,
+                currentPage,
+                hasMore: currentPage < totalPages,
+                prefetchedPages: prefetch ? prefetchPages : 0
             });
         } catch (error) {
             res.status(500).json({
@@ -68,15 +181,26 @@ class ProductController {
             const { id } = req.params;
             const product = await Product.findOne({ productID: id, isActivated: true })
                 .populate('targetInfo')
-                .populate('categoryInfo')
-                .populate('colors')
-                .populate('sizes');
+                .populate('categoryInfo');
 
             if (!product) {
                 return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
             }
 
-            res.json(product);
+            // Lấy colors và sizes
+            const colors = await ProductColor.find({ productID: id });
+            const colorsWithSizes = await Promise.all(colors.map(async (color) => {
+                const sizes = await ProductSizeStock.find({ colorID: color.colorID });
+                return {
+                    ...color.toObject(),
+                    sizes
+                };
+            }));
+
+            res.json({
+                ...product.toObject(),
+                colors: colorsWithSizes
+            });
         } catch (error) {
             res.status(500).json({
                 message: 'Có lỗi xảy ra khi lấy thông tin sản phẩm',
@@ -246,7 +370,7 @@ class ProductController {
     async deleteProduct(req, res) {
         try {
             const { id } = req.params;
-            
+
             const product = await Product.findOne({ productID: id });
             if (!product) {
                 return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
@@ -269,7 +393,7 @@ class ProductController {
     async restoreProduct(req, res) {
         try {
             const { id } = req.params;
-            
+
             const product = await Product.findOne({ productID: id });
             if (!product) {
                 return res.status(404).json({ message: 'Không tìm thấy sản phẩm' });
