@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="@clothesstore.cmkp5.mongodb.net">
+  <database-model serializer="dbm" dbms="MONGO" family-id="MONGO" format-version="4.53">
+    <root id="1">
+      <ServerVersion>8.0.4</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="ClothesStore"/>
+    <schema id="3" parent="1" name="KTTStore">
+      <LastIntrospectionLocalTimestamp>2025-01-17.18:16:44</LastIntrospectionLocalTimestamp>
+    </schema>
+    <schema id="4" parent="1" name="admin"/>
+    <schema id="5" parent="1" name="local"/>
+    <table id="6" parent="3" name="addresses"/>
+    <table id="7" parent="3" name="cart"/>
+    <table id="8" parent="3" name="carts"/>
+    <table id="9" parent="3" name="categories"/>
+    <table id="10" parent="3" name="counters"/>
+    <table id="11" parent="3" name="coupons"/>
+    <table id="12" parent="3" name="favorites"/>
+    <table id="13" parent="3" name="images"/>
+    <table id="14" parent="3" name="notifications"/>
+    <table id="15" parent="3" name="order_details"/>
+    <table id="16" parent="3" name="orders"/>
+    <table id="17" parent="3" name="product_colors"/>
+    <table id="18" parent="3" name="product_sizes_stocks"/>
+    <table id="19" parent="3" name="products"/>
+    <table id="20" parent="3" name="reviews"/>
+    <table id="21" parent="3" name="targets"/>
+    <table id="22" parent="3" name="user_coupons"/>
+    <table id="23" parent="3" name="user_notifications"/>
+    <table id="24" parent="3" name="users"/>
+    <column id="25" parent="6" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="26" parent="6" name="address">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="27" parent="6" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="28" parent="6" name="isDefault">
+      <Position>1</Position>
+      <StoredType>Boolean|12s</StoredType>
+    </column>
+    <column id="29" parent="6" name="updatedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="30" parent="6" name="userID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="31" parent="6" name="addressID">
+      <Position>2</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="32" parent="6" name="isDelete">
+      <Position>2</Position>
+      <StoredType>Boolean|12s</StoredType>
+    </column>
+    <index id="33" parent="6" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="34" parent="6" name="addressID_1">
+      <ColNames>addressID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="35" parent="6" name="isDefault_1">
+      <ColNames>isDefault</ColNames>
+    </index>
+    <index id="36" parent="6" name="userID_1">
+      <ColNames>userID</ColNames>
+    </index>
+    <index id="37" parent="6" name="isDelete_1">
+      <ColNames>isDelete</ColNames>
+    </index>
+    <column id="38" parent="7" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="39" parent="7" name="SKU">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="40" parent="7" name="cartID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="41" parent="7" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="42" parent="7" name="quantity">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="43" parent="7" name="updatedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="44" parent="7" name="userID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <index id="45" parent="7" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <column id="46" parent="9" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="47" parent="9" name="categoryID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="48" parent="9" name="description">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="49" parent="9" name="imageURL">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="50" parent="9" name="name">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <index id="51" parent="9" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="52" parent="9" name="categoryID_1">
+      <ColNames>categoryID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="53" parent="9" name="name_1">
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <column id="54" parent="11" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="55" parent="11" name="appliedCategories">
+      <Position>1</Position>
+      <StoredType>Array|2003s</StoredType>
+    </column>
+    <column id="56" parent="11" name="code">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="57" parent="11" name="couponID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="58" parent="11" name="couponType">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="59" parent="11" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="60" parent="11" name="description">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="61" parent="11" name="discountType">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="62" parent="11" name="endDate">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="63" parent="11" name="isActive">
+      <Position>1</Position>
+      <StoredType>Boolean|12s</StoredType>
+    </column>
+    <column id="64" parent="11" name="maxDiscountAmount">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="65" parent="11" name="minOrderValue">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="66" parent="11" name="startDate">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="67" parent="11" name="totalUsageLimit">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="68" parent="11" name="updatedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="69" parent="11" name="usageLimit">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="70" parent="11" name="discountValue">
+      <Position>2</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="71" parent="11" name="minimumQuantity">
+      <Position>2</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="72" parent="11" name="usedCount">
+      <Position>2</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <index id="73" parent="11" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="74" parent="11" name="code_1">
+      <ColNames>code</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="75" parent="11" name="couponID_1">
+      <ColNames>couponID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="76" parent="11" name="startDate_1_endDate_1">
+      <ColNames>startDate
+endDate</ColNames>
+    </index>
+    <index id="77" parent="11" name="appliedCategories_1">
+      <ColNames>appliedCategories</ColNames>
+    </index>
+    <index id="78" parent="11" name="couponType_1">
+      <ColNames>couponType</ColNames>
+    </index>
+    <index id="79" parent="11" name="isActive_1">
+      <ColNames>isActive</ColNames>
+    </index>
+    <column id="80" parent="12" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="81" parent="12" name="SKU">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="82" parent="12" name="addedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="83" parent="12" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="84" parent="12" name="favoriteID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="85" parent="12" name="note">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="86" parent="12" name="updatedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="87" parent="12" name="userID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <index id="88" parent="12" name="userID_1_SKU_1">
+      <ColNames>userID
+SKU</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="89" parent="12" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="90" parent="12" name="favoriteID_1">
+      <ColNames>favoriteID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="91" parent="12" name="SKU_1">
+      <ColNames>SKU</ColNames>
+    </index>
+    <index id="92" parent="12" name="addedAt_-1">
+      <ColNames>addedAt</ColNames>
+      <ReverseColNames>addedAt</ReverseColNames>
+    </index>
+    <index id="93" parent="12" name="userID_1">
+      <ColNames>userID</ColNames>
+    </index>
+    <column id="94" parent="14" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="95" parent="14" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="96" parent="14" name="createdBy">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="97" parent="14" name="expiresAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="98" parent="14" name="message">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="99" parent="14" name="notificationID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="100" parent="14" name="readCount">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="101" parent="14" name="scheduledFor">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="102" parent="14" name="title">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="103" parent="14" name="type">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <index id="104" parent="14" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="105" parent="14" name="notificationID_1">
+      <ColNames>notificationID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="106" parent="14" name="createdBy_1">
+      <ColNames>createdBy</ColNames>
+    </index>
+    <index id="107" parent="14" name="expiresAt_1">
+      <ColNames>expiresAt</ColNames>
+    </index>
+    <index id="108" parent="14" name="scheduledFor_1">
+      <ColNames>scheduledFor</ColNames>
+    </index>
+    <index id="109" parent="14" name="type_1">
+      <ColNames>type</ColNames>
+    </index>
+    <column id="110" parent="15" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="111" parent="15" name="SKU">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="112" parent="15" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="113" parent="15" name="orderDetailID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="114" parent="15" name="orderID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="115" parent="15" name="quantity">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="116" parent="15" name="updatedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <index id="117" parent="15" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="118" parent="15" name="orderDetailID_1">
+      <ColNames>orderDetailID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="119" parent="15" name="SKU_1">
+      <ColNames>SKU</ColNames>
+    </index>
+    <index id="120" parent="15" name="orderID_1">
+      <ColNames>orderID</ColNames>
+    </index>
+    <column id="121" parent="16" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="122" parent="16" name="address">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="123" parent="16" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="124" parent="16" name="fullname">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="125" parent="16" name="isPayed">
+      <Position>1</Position>
+      <StoredType>Boolean|12s</StoredType>
+    </column>
+    <column id="126" parent="16" name="orderID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="127" parent="16" name="orderStatus">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="128" parent="16" name="paymentPrice">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="129" parent="16" name="shippingStatus">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="130" parent="16" name="totalPrice">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="131" parent="16" name="updatedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="132" parent="16" name="userCouponsID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="133" parent="16" name="userID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="134" parent="16" name="phone">
+      <Position>2</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <index id="135" parent="16" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="136" parent="16" name="orderID_1">
+      <ColNames>orderID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="137" parent="16" name="createdAt_-1">
+      <ColNames>createdAt</ColNames>
+      <ReverseColNames>createdAt</ReverseColNames>
+    </index>
+    <index id="138" parent="16" name="isPayed_1">
+      <ColNames>isPayed</ColNames>
+    </index>
+    <index id="139" parent="16" name="orderStatus_1">
+      <ColNames>orderStatus</ColNames>
+    </index>
+    <index id="140" parent="16" name="shippingStatus_1">
+      <ColNames>shippingStatus</ColNames>
+    </index>
+    <index id="141" parent="16" name="userID_1">
+      <ColNames>userID</ColNames>
+    </index>
+    <column id="142" parent="17" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="143" parent="17" name="colorID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="144" parent="17" name="colorName">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="145" parent="17" name="images">
+      <Position>1</Position>
+      <StoredType>Array|2003s</StoredType>
+    </column>
+    <column id="146" parent="17" name="productID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <index id="147" parent="17" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="148" parent="17" name="colorID_1">
+      <ColNames>colorID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="149" parent="17" name="colorName_1">
+      <ColNames>colorName</ColNames>
+    </index>
+    <index id="150" parent="17" name="productID_1">
+      <ColNames>productID</ColNames>
+    </index>
+    <column id="151" parent="18" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="152" parent="18" name="SKU">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="153" parent="18" name="colorID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="154" parent="18" name="size">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="155" parent="18" name="stock">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <index id="156" parent="18" name="SKU_1">
+      <ColNames>SKU</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="157" parent="18" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="158" parent="18" name="colorID_1">
+      <ColNames>colorID</ColNames>
+    </index>
+    <index id="159" parent="18" name="size_1">
+      <ColNames>size</ColNames>
+    </index>
+    <index id="160" parent="18" name="stock_1">
+      <ColNames>stock</ColNames>
+    </index>
+    <column id="161" parent="19" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="162" parent="19" name="categoryID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="163" parent="19" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="164" parent="19" name="description">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="165" parent="19" name="isActivated">
+      <Position>1</Position>
+      <StoredType>Boolean|12s</StoredType>
+    </column>
+    <column id="166" parent="19" name="name">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="167" parent="19" name="price">
+      <Position>1</Position>
+      <StoredType>Double|8s</StoredType>
+    </column>
+    <column id="168" parent="19" name="productID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="169" parent="19" name="targetID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="170" parent="19" name="thumbnail">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="171" parent="19" name="updatedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <index id="172" parent="19" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="173" parent="19" name="productID_1">
+      <ColNames>productID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="174" parent="19" name="categoryID_1">
+      <ColNames>categoryID</ColNames>
+    </index>
+    <index id="175" parent="19" name="isActivated_1">
+      <ColNames>isActivated</ColNames>
+    </index>
+    <index id="176" parent="19" name="price_1">
+      <ColNames>price</ColNames>
+    </index>
+    <index id="177" parent="19" name="targetID_1">
+      <ColNames>targetID</ColNames>
+    </index>
+    <column id="178" parent="20" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="179" parent="20" name="comment">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="180" parent="20" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="181" parent="20" name="productID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="182" parent="20" name="rating">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="183" parent="20" name="reviewID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="184" parent="20" name="updatedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="185" parent="20" name="userID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <index id="186" parent="20" name="userID_1_productID_1">
+      <ColNames>userID
+productID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="187" parent="20" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="188" parent="20" name="reviewID_1">
+      <ColNames>reviewID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="189" parent="20" name="createdAt_-1">
+      <ColNames>createdAt</ColNames>
+      <ReverseColNames>createdAt</ReverseColNames>
+    </index>
+    <index id="190" parent="20" name="productID_1">
+      <ColNames>productID</ColNames>
+    </index>
+    <index id="191" parent="20" name="rating_1">
+      <ColNames>rating</ColNames>
+    </index>
+    <index id="192" parent="20" name="userID_1">
+      <ColNames>userID</ColNames>
+    </index>
+    <column id="193" parent="21" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="194" parent="21" name="name">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="195" parent="21" name="targetID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <index id="196" parent="21" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="197" parent="21" name="targetID_1">
+      <ColNames>targetID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <column id="198" parent="22" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="199" parent="22" name="couponID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="200" parent="22" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="201" parent="22" name="expiryDate">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="202" parent="22" name="isExpired">
+      <Position>1</Position>
+      <StoredType>Boolean|12s</StoredType>
+    </column>
+    <column id="203" parent="22" name="status">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="204" parent="22" name="updatedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="205" parent="22" name="usageHistory">
+      <Position>1</Position>
+      <StoredType>list|4999545s</StoredType>
+    </column>
+    <column id="206" parent="22" name="userCouponsID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="207" parent="22" name="userID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="208" parent="22" name="usageHistory.discountAmount">
+      <Position>2</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="209" parent="22" name="usageHistory.orderID">
+      <Position>3</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="210" parent="22" name="usageHistory.usedAt">
+      <Position>4</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="211" parent="22" name="usageLeft">
+      <Position>5</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <index id="212" parent="22" name="userID_1_couponID_1">
+      <ColNames>userID
+couponID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="213" parent="22" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="214" parent="22" name="userCouponsID_1">
+      <ColNames>userCouponsID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="215" parent="22" name="expiryDate_1">
+      <ColNames>expiryDate</ColNames>
+    </index>
+    <index id="216" parent="22" name="isExpired_1">
+      <ColNames>isExpired</ColNames>
+    </index>
+    <index id="217" parent="22" name="status_1">
+      <ColNames>status</ColNames>
+    </index>
+    <index id="218" parent="22" name="usageHistory.orderID_1">
+      <ColNames>usageHistory.orderID</ColNames>
+    </index>
+    <column id="219" parent="23" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="220" parent="23" name="isRead">
+      <Position>1</Position>
+      <StoredType>Boolean|12s</StoredType>
+    </column>
+    <column id="221" parent="23" name="notificationID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="222" parent="23" name="readAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="223" parent="23" name="userID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="224" parent="23" name="userNotificationID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <index id="225" parent="23" name="userID_1_notificationID_1">
+      <ColNames>userID
+notificationID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="226" parent="23" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="227" parent="23" name="userNotificationID_1">
+      <ColNames>userNotificationID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="228" parent="23" name="userID_1_isRead_1">
+      <ColNames>userID
+isRead</ColNames>
+    </index>
+    <index id="229" parent="23" name="readAt_1">
+      <ColNames>readAt</ColNames>
+    </index>
+    <column id="230" parent="24" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="231" parent="24" name="createdAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="232" parent="24" name="email">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="233" parent="24" name="fullname">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="234" parent="24" name="isDisabled">
+      <Position>1</Position>
+      <StoredType>Boolean|12s</StoredType>
+    </column>
+    <column id="235" parent="24" name="password">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="236" parent="24" name="phone">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="237" parent="24" name="role">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="238" parent="24" name="updatedAt">
+      <Position>1</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="239" parent="24" name="userID">
+      <Position>1</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="240" parent="24" name="gender">
+      <Position>2</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <index id="241" parent="24" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="242" parent="24" name="email_1">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="243" parent="24" name="phone_1">
+      <ColNames>phone</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="244" parent="24" name="userID_1">
+      <ColNames>userID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="245" parent="24" name="createdAt_-1">
+      <ColNames>createdAt</ColNames>
+      <ReverseColNames>createdAt</ReverseColNames>
+    </index>
+    <index id="246" parent="24" name="isDisabled_1">
+      <ColNames>isDisabled</ColNames>
+    </index>
+    <index id="247" parent="24" name="role_1">
+      <ColNames>role</ColNames>
+    </index>
+  </database-model>
+</dataSource>

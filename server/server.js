@@ -22,51 +22,52 @@ mongoose
 
 // Import routes
 const authRoutes = require('./routes/auth.route');
-
-// Import admin routes
-const adminCategoryRoutes = require('./routes/admin/category.route');
-const adminOrderRoutes = require('./routes/admin/order.route');
-const adminUserRoutes = require('./routes/admin/user.route');
-const adminCouponRoutes = require('./routes/admin/coupon.route');
-const adminProductRoutes = require('./routes/admin/product.route');
-
-// Import customer routes
-const customerProductRoutes = require('./routes/customer/product.route');
-const customerCartRoutes = require('./routes/customer/cart.route');
-const customerOrderRoutes = require('./routes/customer/order.route');
-const customerAddressRoutes = require('./routes/customer/address.route');
-const customerFavoriteRoutes = require('./routes/customer/favorite.route');
-const customerNotificationRoutes = require('./routes/customer/notification.route');
-const customerCouponRoutes = require('./routes/customer/coupon.route');
+const cartRoutes = require('./routes/cart.route');
+const favoriteRoutes = require('./routes/favorite.route');
+const notificationRoutes = require('./routes/notification.route');
+const orderDetailRoutes = require('./routes/order-detail.route');
+const productRoutes = require('./routes/product.route');
+const categoryRoutes = require('./routes/category.route');
+const userRoutes = require('./routes/user.route');
+const reviewRoutes = require('./routes/review.route');
+const orderRoutes = require('./routes/order.route');
+const addressRoutes = require('./routes/address.route');
+const couponRoutes = require('./routes/coupon.route');
+// const paymentRoutes = require('./routes/payment.route');
+// const statisticRoutes = require('./routes/statistic.route');
 
 // Import authentication middleware
 const { authenticateAdmin, authenticateCustomer } = require("./middlewares/auth.middleware");
 
-// Import error middleware
-const { errorConverter, errorHandler } = require('./middlewares/error.middleware');
+// Public routes (không cần xác thực)
+app.use('/api/auth', authRoutes);// Đăng ký và đăng nhập
+app.use('/api/products', productRoutes);// Xem sản phẩm
+app.use('/api/categories', categoryRoutes);// Xem danh mục
 
-// Auth routes
-app.use('/api/auth', authRoutes);
+// Customer routes (cần xác thực customer)
+app.use('/api/cart', authenticateCustomer, cartRoutes);// Quản lý giỏ hàng
+app.use('/api/favorite', authenticateCustomer, favoriteRoutes);// Quản lý yêu thích
+app.use('/api/notification', authenticateCustomer, notificationRoutes);// Quản lý thông báo
+app.use('/api/order-detail', authenticateCustomer, orderDetailRoutes);// Quản lý chi tiết đơn hàng
+app.use('/api/user', authenticateCustomer, userRoutes);// Quản lý thông tin cá nhân
+app.use('/api/review', authenticateCustomer, reviewRoutes);// Đánh giá sản phẩm
+app.use('/api/order', authenticateCustomer, orderRoutes);// Quản lý đơn hàng
+app.use('/api/coupon', authenticateCustomer, couponRoutes);// Quản lý mã giảm giá
+app.use('/api/address', authenticateCustomer, addressRoutes);// Quản lý địa chỉ
+// app.use('/api/payment', authenticateCustomer, paymentRoutes);// Thanh toán
 
-// Admin routes
-app.use('/api/admin/categories', adminCategoryRoutes);
-app.use('/api/admin/orders', adminOrderRoutes);
-app.use('/api/admin/users', adminUserRoutes);
-app.use('/api/admin/coupons', adminCouponRoutes);
-app.use('/api/admin/products', adminProductRoutes);
+// Admin routes (cần xác thực admin)
+app.use('/api/admin', authenticateAdmin, (req, res, next) => {
+  console.log("Đã xác thực admin");
+  next();
+});
 
-// Customer routes
-app.use('/api/products', customerProductRoutes);
-app.use('/api/cart', customerCartRoutes);
-app.use('/api/orders', customerOrderRoutes);
-app.use('/api/addresses', customerAddressRoutes);
-app.use('/api/favorites', customerFavoriteRoutes);
-app.use('/api/notifications', customerNotificationRoutes);
-app.use('/api/coupons', customerCouponRoutes);
-
-// Error handling
-app.use(errorConverter);
-app.use(errorHandler);
+app.use('/api/admin/products', authenticateAdmin, productRoutes);// Quản lý sản phẩm
+app.use('/api/admin/categories', authenticateAdmin, categoryRoutes);// Quản lý danh mục
+app.use('/api/admin/users', authenticateAdmin, userRoutes);// Quản lý người dùng
+app.use('/api/admin/orders', authenticateAdmin, orderRoutes);// Quản lý đơn hàng
+app.use('/api/admin/coupons', authenticateAdmin, couponRoutes);// Quản lý mã giảm giá
+// app.use('/api/admin/statistics', authenticateAdmin, statisticRoutes);// Thống kê
 
 // Khởi động server
 const PORT = process.env.PORT || 5000;

@@ -93,8 +93,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 // Thêm index cho các trường thường được tìm kiếm
-UserSchema.index({ email: 1 });
-UserSchema.index({ phone: 1 });
+UserSchema.index({ fullname: 1 });
 UserSchema.index({ role: 1 });
 UserSchema.index({ isDisabled: 1 });
 UserSchema.index({ createdAt: -1 });

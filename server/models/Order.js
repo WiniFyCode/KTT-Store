@@ -105,11 +105,20 @@ orderSchema.virtual('couponInfo', {
     justOne: true            // Chỉ lấy 1 kết quả
 });
 
+// Lưu trạng thái ban đầu trước khi thay đổi
+orderSchema.pre('save', function(next) {
+    if (this.isModified('orderStatus')) {
+        this._originalStatus = this.orderStatus;
+    }
+    next();
+});
+
 // Middleware để cập nhật trạng thái đơn hàng
 orderSchema.pre('save', function(next) {
     // Nếu đơn hàng đã hoàn thành hoặc đã hủy, không cho phép thay đổi
     if (this.isModified('orderStatus') && 
-        ['completed', 'cancelled'].includes(this.orderStatus)) {
+        ['completed', 'cancelled'].includes(this._originalStatus) && 
+        this.orderStatus !== this._originalStatus) {
         const err = new Error('Không thể thay đổi trạng thái của đơn hàng đã hoàn thành hoặc đã hủy');
         return next(err);
     }

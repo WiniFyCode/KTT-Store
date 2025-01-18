@@ -1,9 +1,12 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
+const bcrypt = require('bcrypt')
 
 // Số lần đăng nhập sai tối đa cho phép
 const MAX_LOGIN_ATTEMPTS = 5
+// Thời gian khóa mặc định (5 phút)
+const DEFAULT_LOCK_TIME = 5 * 60 * 1000
 
 // Tạo transporter để gửi email
 const transporter = nodemailer.createTransport({
@@ -117,8 +120,16 @@ const login = async (req, res) => {
             
             // Nếu đã đạt giới hạn thử (5 lần)
             if (user.loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+                // Khóa tài khoản trong 5 phút
+                await User.findOneAndUpdate(
+                    { email },
+                    { 
+                        lockUntil: Date.now() + DEFAULT_LOCK_TIME,
+                        loginAttempts: MAX_LOGIN_ATTEMPTS
+                    }
+                )
                 return res.status(403).json({
-                    message: `Tài khoản đã bị khóa 30 phút do đăng nhập sai ${MAX_LOGIN_ATTEMPTS} lần`
+                    message: `Tài khoản đã bị khóa ${DEFAULT_LOCK_TIME/60000} phút do đăng nhập sai ${MAX_LOGIN_ATTEMPTS} lần`
                 })
             }
 
@@ -157,7 +168,7 @@ const login = async (req, res) => {
     }
 }
 
-// Lưu trữ OTP tạm thời (trong thực tế nên dùng Redis hoặc database)
+// Lưu trữ OTP tạm thởi (trong thực tế nên dùng Redis hoặc database)
 const otpStore = new Map()
 
 // Tạo và gửi OTP qua email
@@ -317,17 +328,23 @@ const resetPassword = async (req, res) => {
             return res.status(400).json({ message: 'Mã OTP đã hết hạn' })
         }
 
-        // Mã OTP hợp lệ, cập nhật mật khẩu
+        // Mã OTP hợp lệ, cập nhật mật khẩu và mở khóa tài khoản
         const hashedPassword = await bcrypt.hash(newPassword, 10)
         await User.findOneAndUpdate(
             { email },
-            { password: hashedPassword }
+            { 
+                password: hashedPassword,
+                loginAttempts: 0, // Reset số lần đăng nhập sai
+                lockUntil: null   // Mở khóa tài khoản
+            }
         )
 
         // Xóa OTP đã sử dụng
         otpStore.delete(email)
 
-        res.status(200).json({ message: 'Đặt lại mật khẩu thành công' })
+        res.status(200).json({ 
+            message: 'Đặt lại mật khẩu thành công. Tài khoản đã được mở khóa.', newPassword
+        })
 
     } catch (error) {
         console.error('Error in resetPassword:', error)

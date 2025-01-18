@@ -175,36 +175,45 @@ class NotificationController {
     async getUserNotifications(req, res) {
         try {
             const userID = req.user.userID;
-            const { page = 1, limit = 10, isRead } = req.query;
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            const skip = (page - 1) * limit;
 
-            // Query base
-            const query = { userID };
-            if (isRead !== undefined) query.isRead = isRead === 'true';
+            // Lấy danh sách thông báo của user
+            const userNotifications = await UserNotification.find({ userID })
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .lean();
 
-            // Lấy danh sách thông báo với phân trang
-            const [userNotifications, total] = await Promise.all([
-                UserNotification.find(query)
-                    .sort('-createdAt')
-                    .skip((page - 1) * limit)
-                    .limit(limit)
-                    .populate({
-                        path: 'notificationID',
-                        populate: {
-                            path: 'createdBy',
-                            select: 'username'
-                        }
-                    }),
-                UserNotification.countDocuments(query)
-            ]);
+            // Lấy thông tin chi tiết của từng thông báo
+            const notifications = await Promise.all(
+                userNotifications.map(async (un) => {
+                    const notification = await Notification.findOne({ notificationID: un.notificationID }).lean();
+                    return {
+                        ...notification,
+                        isRead: un.isRead,
+                        readAt: un.readAt,
+                        userNotificationID: un.userNotificationID
+                    };
+                })
+            );
+
+            // Đếm tổng số thông báo
+            const total = await UserNotification.countDocuments({ userID });
 
             res.json({
-                notifications: userNotifications,
-                total,
-                totalPages: Math.ceil(total / limit),
-                currentPage: page,
-                unreadCount: await UserNotification.getUnreadCount(userID)
+                message: 'Lấy danh sách thông báo thành công',
+                notifications,
+                pagination: {
+                    total,
+                    totalPages: Math.ceil(total / limit),
+                    currentPage: page,
+                    limit
+                }
             });
         } catch (error) {
+            console.error('Error in getUserNotifications:', error);
             res.status(500).json({
                 message: 'Có lỗi xảy ra khi lấy danh sách thông báo',
                 error: error.message
@@ -216,28 +225,29 @@ class NotificationController {
     async markAsRead(req, res) {
         try {
             const userID = req.user.userID;
-            const { id } = req.params;
+            const { id } = req.params; // id là userNotificationID
 
-            const userNotification = await UserNotification.findOne({
-                userNotificationID: id,
-                userID
+            const userNotification = await UserNotification.findOne({ 
+                userNotificationID: parseInt(id),
+                userID 
             });
 
             if (!userNotification) {
-                return res.status(404).json({ message: 'Không tìm thấy thông báo' });
+                return res.status(404).json({
+                    message: 'Không tìm thấy thông báo'
+                });
             }
 
-            if (!userNotification.isRead) {
-                await userNotification.markAsRead();
-            }
+            // Đánh dấu đã đọc
+            await userNotification.markAsRead();
 
             res.json({
-                message: 'Đánh dấu đã đọc thành công',
-                notification: userNotification
+                message: 'Đánh dấu thông báo đã đọc thành công'
             });
         } catch (error) {
+            console.error('Error in markAsRead:', error);
             res.status(500).json({
-                message: 'Có lỗi xảy ra khi đánh dấu đã đọc',
+                message: 'Có lỗi xảy ra khi đánh dấu thông báo đã đọc',
                 error: error.message
             });
         }
@@ -260,6 +270,25 @@ class NotificationController {
         } catch (error) {
             res.status(500).json({
                 message: 'Có lỗi xảy ra khi đánh dấu tất cả đã đọc',
+                error: error.message
+            });
+        }
+    }
+
+    // USER: Lấy số lượng thông báo chưa đọc
+    async getUnreadCount(req, res) {
+        try {
+            const userID = req.user.userID;
+            const count = await UserNotification.getUnreadCount(userID);
+
+            res.json({
+                message: 'Lấy số lượng thông báo chưa đọc thành công',
+                count
+            });
+        } catch (error) {
+            console.error('Error in getUnreadCount:', error);
+            res.status(500).json({
+                message: 'Có lỗi xảy ra khi lấy số lượng thông báo chưa đọc',
                 error: error.message
             });
         }

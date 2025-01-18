@@ -31,7 +31,7 @@ const couponSchema = new Schema({
         required: true,
         min: 0,
         validate: {
-            validator: function(value) {
+            validator: function (value) {
                 // Nếu là phần trăm, giá trị không được vượt quá 100
                 return this.discountType !== 'percentage' || value <= 100;
             },
@@ -53,7 +53,7 @@ const couponSchema = new Schema({
         type: Date,
         required: true,
         validate: {
-            validator: function(value) {
+            validator: function (value) {
                 return !this.endDate || value <= this.endDate;
             },
             message: 'Ngày bắt đầu phải trước ngày kết thúc'
@@ -79,7 +79,7 @@ const couponSchema = new Schema({
         default: 0,
         min: 0,
         validate: {
-            validator: function(value) {
+            validator: function (value) {
                 return value <= this.totalUsageLimit;
             },
             message: 'Số lần sử dụng không thể vượt quá giới hạn'
@@ -110,19 +110,16 @@ const couponSchema = new Schema({
 });
 
 // Thêm index cho các trường thường được tìm kiếm
-couponSchema.index({ code: 1 });
 couponSchema.index({ isActive: 1 });
 couponSchema.index({ startDate: 1, endDate: 1 });
-couponSchema.index({ couponType: 1 });
-couponSchema.index({ 'appliedCategories': 1 });
 
 // Virtual field để kiểm tra trạng thái hiệu lực
-couponSchema.virtual('isValid').get(function() {
+couponSchema.virtual('isValid').get(function () {
     const now = new Date();
-    return this.isActive && 
-           this.usedCount < this.totalUsageLimit && 
-           now >= this.startDate && 
-           now <= this.endDate;
+    return this.isActive &&
+        this.usedCount < this.totalUsageLimit &&
+        now >= this.startDate &&
+        now <= this.endDate;
 });
 
 // Tạo model từ schema
