@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fada4d0-7ef7-4b90-a5b4-dd34b186b98a" name="Changes" comment="" />
+    <list default="true" id="8fada4d0-7ef7-4b90-a5b4-dd34b186b98a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9f11420e-4da4-4eaa-9121-9a46d8168f11.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9f11420e-4da4-4eaa-9121-9a46d8168f11.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,26 +16,26 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "state": "OPEN",
-      "assignee": "NguyenDuyKhoi98",
-      "author": "nthanhtoan61"
+      &quot;state&quot;: &quot;OPEN&quot;,
+      &quot;assignee&quot;: &quot;NguyenDuyKhoi98&quot;,
+      &quot;author&quot;: &quot;nthanhtoan61&quot;
     }
   ],
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "NguyenDuyKhoi98",
-    "author": "nthanhtoan61"
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;NguyenDuyKhoi98&quot;,
+    &quot;author&quot;: &quot;nthanhtoan61&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/WiniFyCode/ktt-store.git",
-    "accountId": "d98d09a0-691d-4e46-a6a5-f1cffcffc381"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/WiniFyCode/ktt-store.git&quot;,
+    &quot;accountId&quot;: &quot;d98d09a0-691d-4e46-a6a5-f1cffcffc381&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -85,7 +88,8 @@
       <workItem from="1737095750116" duration="1528000" />
       <workItem from="1737107654261" duration="542000" />
       <workItem from="1737135702712" duration="880000" />
-      <workItem from="1737136607412" duration="2324000" />
+      <workItem from="1737136607412" duration="2697000" />
+      <workItem from="1737183544113" duration="921000" />
     </task>
     <servers />
   </component>
